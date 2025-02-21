@@ -1,18 +1,18 @@
-import React from 'react'
-import './globals.css'
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import Home from './pages/Home/Home'
+import React from "react";
+import "./globals.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   return (
-    <div>
-      <Router>
+    <Router>
+      <div className="relative">
         <Routes>
-            <Route path='/' element={<Home/>} />
+          <Route path="/" element={<Home />} />
         </Routes>
-      </Router>
-    </div>
-  )
-}
+      </div>
+    </Router>
+  );
+};
 
-export default App
+export default App;
