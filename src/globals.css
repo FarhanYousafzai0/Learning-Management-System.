@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+
+
+.play:hover .play-child {
+    box-shadow: 0 0 0 10px #066ac966 !important;
+  }
+  

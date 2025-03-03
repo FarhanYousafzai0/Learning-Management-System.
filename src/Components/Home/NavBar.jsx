@@ -9,6 +9,8 @@ import SmallNavigation from './SmallNavigation';
 
 const NavBar = () => {
 
+
+  
   const [rotate,setRotate] = useState(false)
   return (
     <>

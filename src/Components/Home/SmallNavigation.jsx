@@ -27,7 +27,7 @@ const handleOpen3 = (id) => {
   setOpen3(open3 === id ? null : id);
 };
   return (
-    <div className={`flex px-5 md:px-10 overflow-hidden lg:hidden flex-col  bg-white shadow  transition-all duration-500 w-full gap-4 items-center ${open ? 'h-[350px] py-3' : 'h-0'}`}>
+    <div className={`flex px-5 md:px-10 overflow-hidden lg:hidden flex-col  bg-white z-50 shadow absolute  transition-all duration-500 w-full gap-4 items-center ${open ? 'h-[350px] py-3' : 'h-0'}`}>
       
       {/* Logo and Category */}
       <div className="flex items-center w-full gap-5">
@@ -71,7 +71,7 @@ const handleOpen3 = (id) => {
                        {/* Third Drop-Down */}
                        
                        <ul className={`flex flex-col w-full max-h-0 
-                    ${open3 === index3 ? 'max-h-[300px] overflow-y-scroll' :'max-h-0'} 
+                    ${open3 === index3 ? ' overflow-y-scroll' :'max-h-0'} 
                     transition-all duration-500 overflow-hidden`}>
                     
                     {item3?.subSubList?.map((item4, index4) => (
