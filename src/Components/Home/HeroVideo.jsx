@@ -26,7 +26,7 @@ export default function HeroVideo() {
     <div>
       <button
         onClick={handleOpen}
-        className="cursor-pointer play items-center gap-3 font-semibold flex p-4 rounded-md  border-0"
+        className="cursor-pointer play items-center outline-0 gap-3 font-semibold flex p-4 rounded-md  border-0"
       >
         <div
           style={{ boxShadow: "0 0 0 8px rgba(6, 106, 201, 0.4)" }}
