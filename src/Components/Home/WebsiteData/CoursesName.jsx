@@ -1,7 +1,7 @@
 export const courses = [
-    "web design",
-    "development",
-    "graphic design",
-    "marketing",
-    "finace",
+    "Web Design",
+    "Development",
+    "Graphic Design",
+    "Marketing",
+    "Finance",
   ];
