@@ -7,19 +7,18 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 
 const Courses = () => {
-  const [selected, setSelected] = useState("Web Design"); // Default category
+  const [selected, setSelected] = useState("All"); // Default category
   const [likedItems, setLikedItems] = useState({}); // Track liked items
-  const [filterCourses, setFilterCourses] = useState([]);
-
-  // ✅ Show "Web Design" category by default on first render
-  useEffect(() => {
-    handleFilterCourses("Design");
-  }, []);
+  const [filterCourses, setFilterCourses] = useState(coursesData); // Initialize with all courses
 
   // ✅ Function to filter courses based on category
   const handleFilterCourses = (category) => {
-    const filtered = coursesData.filter((data) => data.category === category);
-    setFilterCourses(filtered);
+    if (category === "All") {
+      setFilterCourses(coursesData); // Show all courses when "All" is clicked
+    } else {
+      const filtered = coursesData.filter((data) => data.category.toLowerCase() === category.toLowerCase());
+      setFilterCourses(filtered);
+    }
   };
 
   // ✅ Function to update selected category and apply filtering
@@ -65,7 +64,7 @@ const Courses = () => {
       {/* Courses-card */}
       <div className="grid grid-cols-1 my-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filterCourses.map((item2, index) => (
-          <div key={index} className="rounded-md overflow-hidden shadow-lg cursor-pointer ">
+          <div key={index} className="rounded-md overflow-hidden shadow-lg cursor-pointer">
             <img src={item2.image} alt="" />
             <div className="card-data p-3 flex flex-col gap-2">
               <div className="flex items-center justify-between">
@@ -91,12 +90,12 @@ const Courses = () => {
                 </div>
               </div>
 
-              <h3 className="text-2xl font-semibold hover:text-green-500 cursor-pointer transition-all">{item2.title}</h3>
+              <h3 className="text-2xl font-semibold hover:text-green-500 cursor-pointer transition-all">
+                {item2.title}
+              </h3>
               <p className="text-gray-500">{item2.desc}</p>
               <div className="flex items-center gap-1">
-                <span>
-                  {Array.from({ length: item2.rating }).map((_, index) => "⭐")}
-                </span>
+                <span>{Array.from({ length: item2.rating }).map((_, index) => "⭐")}</span>
                 <p>{item2.rating}</p>/5.0
               </div>
               <span className="h-[1px] w-full bg-gray-200"></span>

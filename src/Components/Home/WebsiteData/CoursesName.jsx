@@ -1,5 +1,5 @@
 export const courses = [
-    "Web Design",
+    "All",
     "Development",
     "Graphic Design",
     "Marketing",
