@@ -65,7 +65,7 @@ const Courses = () => {
       {/* Courses-card */}
       <div className="grid grid-cols-1 my-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filterCourses.map((item2, index) => (
-          <div key={index} className="rounded-md overflow-hidden shadow-lg">
+          <div key={index} className="rounded-md overflow-hidden shadow-lg cursor-pointer ">
             <img src={item2.image} alt="" />
             <div className="card-data p-3 flex flex-col gap-2">
               <div className="flex items-center justify-between">
@@ -91,7 +91,7 @@ const Courses = () => {
                 </div>
               </div>
 
-              <h3 className="text-2xl font-semibold">{item2.title}</h3>
+              <h3 className="text-2xl font-semibold hover:text-green-500 cursor-pointer transition-all">{item2.title}</h3>
               <p className="text-gray-500">{item2.desc}</p>
               <div className="flex items-center gap-1">
                 <span>
