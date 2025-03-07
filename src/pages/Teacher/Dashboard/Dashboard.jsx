@@ -4,6 +4,7 @@ import { BsFillPatchCheckFill } from 'react-icons/bs';
 import { PiStudentFill } from 'react-icons/pi';
 import { TiBook } from 'react-icons/ti';
 import { Button } from '@mui/material';
+import QuizModal from './QuizModal';
 
 const Dashboard = () => {
   return (
@@ -45,7 +46,7 @@ const Dashboard = () => {
 
           {/* Button */}
           <div className="flex justify-center md:justify-end  mt-4 md:mt-0">
-            <Button variant='contained' sx={{background:'#28C495'}} >Create a course</Button>
+          <QuizModal/>
           </div>
         </div>
       </section>
