@@ -1,0 +1,7 @@
+
+
+const getPost = (req,res)=>{
+
+
+}
+
