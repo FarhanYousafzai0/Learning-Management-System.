@@ -8,25 +8,52 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GradeIcon from '@mui/icons-material/Grade';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { xs: '90%', sm: '80%', md: '60%', lg: '40%' }, // Responsive width
+  width: { xs: '90%', sm: '80%', md: '60%', lg: '40%' },
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
   borderRadius: '10px',
-  maxHeight: '90vh', // Ensure modal doesn't exceed viewport height
-  overflowY: 'auto', // Add scroll if content overflows
+  maxHeight: '90vh',
+  overflowY: 'auto',
 };
 
 const QuizModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [formFields, setFormFields] = React.useState({
+    question: '',
+    deadline: '',
+    time: '',
+    max_marks: '',
+    batch_no: '',
+    course_name: ''
+  });
+
+  const { question, deadline, time, max_marks, batch_no, course_name } = formFields;
+
+  const handleValue = (e) => {
+    setFormFields({
+      ...formFields,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAddQuiz = async() => {
+    const response = await axios.post('http://localhost:5001/api/quiz/add-quiz',{
+      question, deadline, time, max_marks, batch_no, course_name 
+      
+    })
+    console.log(response)
+  };
 
   return (
     <div>
@@ -47,15 +74,21 @@ const QuizModal = () => {
             <TextField
               fullWidth
               label="Question"
+              value={question}
+              onChange={handleValue}
+              name='question'
               variant="outlined"
               margin="normal"
               placeholder="Enter your question here..."
             />
             <Grid container spacing={2} sx={{ mt: 1 }}>
-              <Grid item xs={12} sm={6}> {/* Full width on mobile, half on larger screens */}
+              <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   label="Date"
+                  value={deadline}
+                  onChange={handleValue}
+                  name='deadline'
                   variant="outlined"
                   margin="normal"
                   type="date"
@@ -68,9 +101,12 @@ const QuizModal = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}> {/* Full width on mobile, half on larger screens */}
+              <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  value={time}
+                  onChange={handleValue}
+                  name='time'
                   label="Time"
                   variant="outlined"
                   margin="normal"
@@ -87,7 +123,10 @@ const QuizModal = () => {
             </Grid>
             <TextField
               fullWidth
+              value={max_marks}
+              name='max_marks'
               label="Marks"
+              onChange={handleValue}
               variant="outlined"
               margin="normal"
               type="number"
@@ -99,7 +138,29 @@ const QuizModal = () => {
                 ),
               }}
             />
+            <TextField
+              fullWidth
+              value={course_name}
+              name='course_name'
+              label="Course Name"
+              onChange={handleValue}
+              variant="outlined"
+              margin="normal"
+              placeholder="Enter course name..."
+            />
+            <TextField
+              fullWidth
+              label="Batch No"
+              value={batch_no}
+              name='batch_no'
+              variant="outlined"
+              margin="normal"
+              type="number"
+              onChange={handleValue}
+              placeholder="Enter batch number..."
+            />
             <Button
+              onClick={handleAddQuiz}
               variant="contained"
               startIcon={<AddCircleOutlineIcon />}
               sx={{ mt: 2, background: '#28C495', '&:hover': { background: '#1e9c7a' } }}
