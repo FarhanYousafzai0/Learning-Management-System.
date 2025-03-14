@@ -9,6 +9,14 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GradeIcon from '@mui/icons-material/Grade';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { addQuizData, quizReset } from '../../../features/Quiz/quizSlice';
+import toast from 'react-hot-toast';
+
+
+
+
 
 const style = {
   position: 'absolute',
@@ -28,6 +36,9 @@ const QuizModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+const dispatch = useDispatch();
+
+
 
   const [formFields, setFormFields] = React.useState({
     question: '',
@@ -40,15 +51,32 @@ const QuizModal = () => {
 
   const { question, deadline, time, max_marks, batch_no, course_name } = formFields;
 
+  // Hanle Input Values
   const handleValue = (e) => {
     setFormFields({
       ...formFields,
       [e.target.name]: e.target.value
     });
   };
+// 
+const { quizError, quizMessage } = useSelector((state) => state.quiz);
 
+React.useEffect(() => {
+  if (quizError) {
+    toast.error(quizMessage);
+  }
+
+  dispatch(quizReset());
+}, [quizError])
+
+  // Handle Add Quiz
   const handleAddQuiz = async() => {
-   
+   const quizData = {
+    question, deadline, time, max_marks, batch_no, course_name 
+   }
+dispatch(addQuizData(quizData));
+
+
   };
 
   return (
