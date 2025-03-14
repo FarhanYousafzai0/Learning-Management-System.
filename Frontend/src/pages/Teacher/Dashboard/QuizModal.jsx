@@ -48,11 +48,7 @@ const QuizModal = () => {
   };
 
   const handleAddQuiz = async() => {
-    const response = await axios.post('http://localhost:5001/api/quiz/add-quiz',{
-      question, deadline, time, max_marks, batch_no, course_name 
-      
-    })
-    console.log(response)
+   
   };
 
   return (
