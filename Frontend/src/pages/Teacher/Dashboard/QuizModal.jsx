@@ -1,23 +1,13 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { TextField, Grid, InputAdornment } from '@mui/material';
+import { Box, Button, Typography, Modal, TextField, Grid, InputAdornment } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GradeIcon from '@mui/icons-material/Grade';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addQuizData, quizReset } from '../../../features/Quiz/quizSlice';
 import toast from 'react-hot-toast';
-
-
-
-
-
+import {HashLoader} from 'react-spinners'
 const style = {
   position: 'absolute',
   top: '50%',
@@ -32,68 +22,77 @@ const style = {
   overflowY: 'auto',
 };
 
+const initialFormState = {
+  question: '',
+  deadline: '',
+  time: '',
+  max_marks: '',
+  batch_no: '',
+  course_name: ''
+};
+
 const QuizModal = () => {
+
+  
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-const dispatch = useDispatch();
-
-
-
-  const [formFields, setFormFields] = React.useState({
-    question: '',
-    deadline: '',
-    time: '',
-    max_marks: '',
-    batch_no: '',
-    course_name: ''
-  });
+  const [formFields, setFormFields] = React.useState(initialFormState);
 
   const { question, deadline, time, max_marks, batch_no, course_name } = formFields;
 
-  // Hanle Input Values
+  const dispatch = useDispatch();
+  const { quizError, quizMessage, quizSuccess } = useSelector((state) => state.quiz);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleValue = (e) => {
     setFormFields({
       ...formFields,
       [e.target.name]: e.target.value
     });
   };
-// 
-const { quizError, quizMessage } = useSelector((state) => state.quiz);
 
-React.useEffect(() => {
-  if (quizError) {
-    toast.error(quizMessage);
-  }
+  React.useEffect(() => {
+    if (quizError) toast.error(quizMessage);
+    if (quizSuccess) {
+      toast.success('Quiz added successfully!');
+      setFormFields(initialFormState);
+      handleClose();
+    }
+    dispatch(quizReset());
+  }, [quizError, quizSuccess, quizMessage, dispatch]);
 
-  dispatch(quizReset());
-}, [quizError])
+  const handleAddQuiz = () => {
+    if (!question || !deadline || !time || !max_marks || !batch_no || !course_name) {
+      toast.error('All fields are required!');
+      return;
+    }
 
-  // Handle Add Quiz
-  const handleAddQuiz = async() => {
-   const quizData = {
-    question, deadline, time, max_marks, batch_no, course_name 
-   }
-dispatch(addQuizData(quizData));
-
-
+    const quizData = { question, deadline, time, max_marks, batch_no, course_name };
+    dispatch(addQuizData(quizData));
   };
 
   return (
     <div>
-      <Button onClick={handleOpen} variant='contained' sx={{ background: '#1372CC', '&:hover': { background: '#6DA8DF' } }}>
+      <Button
+        onClick={handleOpen}
+        variant='contained'
+        sx={{ background: '#1372CC', '&:hover': { background: '#6DA8DF' } }}
+      >
         Add New Quiz
       </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="quiz-modal-title"
+        aria-describedby="quiz-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h4" component="h2" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
+          <Typography id="quiz-modal-title" variant="h4" component="h2" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
             Add a Quiz
           </Typography>
+
           <Box component="form" noValidate autoComplete="off">
             <TextField
               fullWidth
@@ -183,15 +182,17 @@ dispatch(addQuizData(quizData));
               onChange={handleValue}
               placeholder="Enter batch number..."
             />
+
             <Button
               onClick={handleAddQuiz}
               variant="contained"
-              startIcon={<AddCircleOutlineIcon />}
+             
               sx={{ mt: 2, background: '#28C495', '&:hover': { background: '#1e9c7a' } }}
               fullWidth
+              disabled={!question || !deadline || !time || !max_marks || !batch_no || !course_name}
             >
-              Add Quiz
-            </Button>
+{quizSuccess ? <HashLoader color="#ffffff" size={20} /> : "Add quiz"}
+</Button>
           </Box>
         </Box>
       </Modal>

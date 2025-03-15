@@ -4,21 +4,24 @@ import dotenv from 'dotenv';
 import quizRouter from './Routes/QuizRouter.js';
 import { errorHandler } from './Middleware/errorMiddleware.js';
 import { connectDB } from './config/Connect.js';
-import cors from 'cors'
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 connectDB();
-app.use(cors())
+app.use(cors());
+
 // Conversion of data into JSON for handling API requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/quiz/', quizRouter); // Fixed the trailing slash in the route
+// API Routes
+app.use('/api/quiz/', quizRouter);
 
 // Error Handling Middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000; // Added a default port as a fallback
-app.listen(process.env.PORT || 5001, console.log(`Server has been started on ${process.env.PORT.bgYellow || 5001}`))
+// Port Configuration
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server has been started on ${PORT}`.yellow));
