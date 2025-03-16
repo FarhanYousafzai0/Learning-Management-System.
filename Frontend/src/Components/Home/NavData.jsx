@@ -13,59 +13,55 @@ export const nav_data = [
       },
       {
         id: 3,
-        title: "Home Default",
+        title: "Home Education",
         link: "",
       },
       {
         id: 4,
-        title: "Home Default",
+        title: "Home Course",
         link: "",
       },
       {
         id: 5,
-        title: "Home Default",
+        title: "Home Acedmey",
         link: "",
       },
       {
         id: 6,
-        title: "Home Default",
+        title: "Home University",
         link: "",
       },
       {
         id: 7,
-        title: "Home Default",
+        title: "Home Tutor",
         link: "",
       },
       {
         id: 8,
-        title: "Home Default",
+        title: "Home Kindergarton",
         link: "",
       },
       {
         id: 9,
-        title: "Home Default",
+        title: "Home School",
         link: "",
       },
       {
         id: 10,
-        title: "Home Default",
+        title: "Home Abroad",
         link: "",
       },
       {
         id: 11,
-        title: "Home Default",
+        title: "Home Workshop",
         link: "",
       },
       {
         id: 12,
-        title: "Home Default",
+        title: "Home Landing",
         link: "",
       },
-      {
-        id: 13,
-        title: "Home Default",
-        link: "",
-      },
+      
     ],
   },
   {

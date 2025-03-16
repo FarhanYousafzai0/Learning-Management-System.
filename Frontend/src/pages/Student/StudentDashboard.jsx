@@ -13,7 +13,14 @@ const StudentDashboard = () => {
       <NavBar />
 
 {/* Background Header */}
-<div className="min-h-[100px] p md:min-h-[200px] bg-[#1D3B53]"></div>
+<div
+  style={{
+    backgroundImage:
+      "url(https://themes.stackbros.in/eduport_r/assets/04-Bnwx2Yg_.png)",
+  }}
+className="min-h-[100px]  md:min-h-[200px] bg-[#1D3B53]">
+
+</div>
 
 {/* Profile Section */}
 <section className="container mx-auto p-5 md:-mt-7 md:px-10">
