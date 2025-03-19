@@ -1,12 +1,14 @@
 import React from 'react';
 import {  FaCheckCircle } from 'react-icons/fa';
 import HeroVideo from './HeroVideo';
-
+import {animate, motion} from 'motion/react'
 const Hero = () => {
   return (
     <section className="container mx-auto px-10 md:px-20 p-10   grid grid-cols-1 md:grid-cols-2">
       <div className="flex flex-col gap-7 relative items-start justify-center">
-        <h1 className=" text-4xl md:text-6xl  font-semibold">
+        <motion.h1 
+        
+        className=" text-4xl md:text-6xl  font-semibold">
           Limitless learning at your{' '}
           <span className="relative">
             fingertips{' '}
@@ -14,7 +16,7 @@ const Hero = () => {
               <img src="/Svgs/hero-svg.svg" alt="Decorative SVG" />
             </span>
           </span>
-        </h1>
+        </motion.h1>
 
         <p className="text-gray-500 text-1xl md:text-[1.2rem]">Online learning and teaching marketplace with 5K+ courses & 10M students. Taught by experts to help you acquire new skills.</p>
 

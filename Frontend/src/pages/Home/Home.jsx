@@ -7,7 +7,6 @@ import BecomeInstructor from '../../Components/Home/BecomeInstructor'
 import TrendingCourses from '../../Components/Home/TrendingCourses'
 import FeedBack from '../../Components/Home/FeedBack'
 import Footer from '../../Components/Home/Footer'
-
 const Home = () => {
   
  
@@ -15,7 +14,7 @@ const Home = () => {
     <>
      
 
-      <NavBar />
+      <NavBar  />
       <Hero />
       <StateDetails />
       <Courses />

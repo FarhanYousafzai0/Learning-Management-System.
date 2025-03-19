@@ -17,24 +17,12 @@ const App = () => {
     setTimeout(() => setLoader(false), 2000); // Simulating loading delay
   }, []);
 
-  const { scrollYProgress } = useScroll();
 
-  // Add spring effect for smooth scaling
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   return (
     <Router>
       <div className="relative">
-        <motion.div
-          style={{
-            scaleX: smoothProgress
-          }}
-          className='fixed top-0 left-0 right-0 bg-[#066AC9] h-[5px] rounded-lg  z-50'
-        ></motion.div>
+      
 
         {loader ? (
          <Loader/>
