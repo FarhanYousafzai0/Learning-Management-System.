@@ -5,7 +5,7 @@ import { LuClock5 } from "react-icons/lu";
 import { MdOutlineCalendarViewMonth } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-
+import {motion } from 'motion/react'
 const Courses = () => {
   const [selected, setSelected] = useState("All"); // Default category
   const [likedItems, setLikedItems] = useState({}); // Track liked items
@@ -36,7 +36,21 @@ const Courses = () => {
   };
 
   return (
-    <section className="p-3 md:p-10 container mx-auto">
+    <motion.section
+    initial={{
+      opacity: 0,
+      translateY: -20
+    }}
+    whileInView={{
+      opacity: 1,
+      translateY: 0
+    }}
+    transition={{
+      duration: 0.6,
+      ease: "easeOut"
+    }}
+    
+    className="p-3 md:p-10 container mx-auto">
       <h1 className="text-center font-bold md:text-5xl text-3xl">
         Most Popular Courses
       </h1>
@@ -114,7 +128,7 @@ const Courses = () => {
           </div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

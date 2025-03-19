@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaFacebookF, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 const menuItems = ['About us', 'Contact us', 'News and Blogs', 'Library', 'Career'];
 const community = ['Documentation', 'FAQ', 'Forum', 'Sitemap'];
@@ -7,6 +7,11 @@ const contact = ['Email: coderwithferry@gmail.com'];
 
 
 const Footer = () => {
+   const [language, setLanguage] = useState('Language');
+
+  const handleChange = (e) => {
+    setLanguage(e.target.value);
+  };
   return (
     <div className='w-full bg-[#FFFFFF] mx-auto px-10 md:px-20 py-15 border-t border-gray-300'>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 place-content-center lg:grid-cols-5 gap-10'>
@@ -64,7 +69,16 @@ const Footer = () => {
 
 
 <hr className='mt-4 text-gray-300'/>
-     
+     <div className='flex items-center mt-4   justify-between'>
+
+      <p className=''>Copyrights ©2025 PNY. Build by Farhan Yousafzai</p>
+
+<div className='flex items-center gap-6'>
+
+  <p>Terms of use </p>
+  <p>Privacy policy</p>
+</div>
+     </div>
     </div>
   );
 };

@@ -4,7 +4,22 @@ import HeroVideo from './HeroVideo';
 import {animate, motion} from 'motion/react'
 const Hero = () => {
   return (
-    <section className="container mx-auto px-10 md:px-20 p-10   grid grid-cols-1 md:grid-cols-2">
+    <motion.section
+  
+
+
+  initial={{
+    opacity:0
+  }}
+animate={{
+  opacity:1
+}}
+
+transition={{
+  duration:0.3
+}}
+
+    className="container mx-auto px-10 md:px-20 p-10   grid grid-cols-1 md:grid-cols-2">
       <div className="flex flex-col gap-7 relative items-start justify-center">
         <motion.h1 
         
@@ -38,7 +53,11 @@ const Hero = () => {
 
         <div className="flex items-center gap-1 md:gap-3 ">
 
-          <button className='bg-rose-100 text-red-500 flex font-semibold relative whitespace-nowrap px-6 rounded-md py-3'>Get Started</button>
+          <motion.button
+          whileTap={{
+            scale:0.95
+          }}
+          className='bg-rose-100 text-red-500 cursor-pointer flex font-semibold relative whitespace-nowrap px-6 rounded-md py-3'>Get Started</motion.button>
           
 
           <HeroVideo/>
@@ -61,7 +80,7 @@ const Hero = () => {
 
 
       </div>
-    </section>
+    </motion.section>
   );
 };
 
