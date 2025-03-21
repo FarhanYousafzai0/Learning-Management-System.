@@ -28,7 +28,13 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         default: 'user'
+    },
+    otp: {
+        type: Number,
+        default: null // or default: 0 depending on your logic
     }
+    
+
 
 }, { timestamps: true })
 
