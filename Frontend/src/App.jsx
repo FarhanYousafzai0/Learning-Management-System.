@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import { motion, useScroll, useSpring } from 'framer-motion';
 import SignUp from "./pages/Auth/SignUp";
+import SignIn from "./pages/Auth/Signin";
 
 const App = () => {
 
@@ -41,6 +42,8 @@ const App = () => {
 
             <Route path="/user">
               <Route path="register" element={<SignUp />} />
+              <Route path="login" element={<SignIn />} />
+
             </Route>
           </Routes>
      

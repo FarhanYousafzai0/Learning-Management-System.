@@ -70,7 +70,7 @@ transition={{
 
       <div className="flex items-center justify-center ">
 <div className="overflow-hidden relative ">
-<img src="./Images/RightImage.png" alt="" className='object-center -z-50 object-cover ' />
+<img src="./Images/Bg.svg" alt="" className='object-center -z-50 object-cover ' />
 
 
 {/* <img src="https://themes.stackbros.in/eduport_r/assets/07-CK3ZrEuH.png" className='absolute top-0 left-0 object-center object-cover' alt="" /> */}
