@@ -7,7 +7,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { Toaster } from "react-hot-toast";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import { motion, useScroll, useSpring } from 'framer-motion';
-import Loader from "./Components/Home/Loader";
+import SignUp from "./pages/Auth/SignUp";
 
 const App = () => {
 
@@ -21,12 +21,10 @@ const App = () => {
 
   return (
     <Router>
-      <div className="relative">
+      <div className="relative bg-white text-black">
       
 
-        {loader ? (
-         <Loader/>
-        ) : (
+       
           <Routes>
             {/* Home */}
             <Route path="/" element={<Home />} />
@@ -40,8 +38,12 @@ const App = () => {
             <Route path="/student">
               <Route path="dashboard" element={<StudentDashboard />} />
             </Route>
+
+            <Route path="/user">
+              <Route path="register" element={<SignUp />} />
+            </Route>
           </Routes>
-        )}
+     
 
         <Toaster />
       </div>
