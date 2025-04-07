@@ -115,3 +115,25 @@ export const login = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Logout successful!" });
 });
+
+
+
+export const OTPVerification = asyncHandler(async (req, res) => {
+    const { user_id } = req.params;
+    const { otp } = req.body;
+  
+    const findUser = await user.findById(user_id);
+  
+    if (!findUser) {
+      return res.status(401).json({ error: 'User not found!' });
+    }
+  
+    if (findUser.otp !== otp) {
+      return res.status(401).json({ error: 'Invalid OTP or OTP expired!' });
+    }
+  
+    findUser.otp = null;
+    await findUser.save();
+  
+    res.status(200).json({ message: 'OTP verified successfully!' });
+  });
