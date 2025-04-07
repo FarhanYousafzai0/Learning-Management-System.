@@ -16,6 +16,6 @@ userRouter.post('/logout',logout);
 
 
 // otp
-userRouter.post('otp',OTPVerification)
+userRouter.post('/otp/:id',OTPVerification)
 
 export default userRouter
