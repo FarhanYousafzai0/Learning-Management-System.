@@ -42,6 +42,8 @@ export const register = asyncHandler(async (req, res) => {
     const { password: _, otp: __, ...userWithoutSensitive } = registerData._doc;
     res.status(201).json(userWithoutSensitive);
 
+
+// Adding Mail to get the otp
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -117,7 +119,7 @@ export const logout = asyncHandler(async (req, res) => {
 });
 
 
-
+// Otp verfication :
 export const OTPVerification = asyncHandler(async (req, res) => {
   const user_id = req.params.id;
   const { otp } = req.body;
@@ -136,12 +138,12 @@ export const OTPVerification = asyncHandler(async (req, res) => {
     return res.status(410).json({ error: "OTP already used or expired!" });
   }
 
-  if (otp !== findUser.otp) {
+  if (otp != findUser.otp) {
     return res.status(401).json({ error: "Invalid OTP!" });
   }
 
   findUser.otp = null;
   await findUser.save();
 res.send(findUser)
-  return res.status(200).json({ message: "OTP verified successfully!" });
+ res.status(200).json({ message: "OTP verified successfully!" });
 });

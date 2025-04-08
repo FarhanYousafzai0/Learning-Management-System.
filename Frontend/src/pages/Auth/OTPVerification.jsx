@@ -13,7 +13,7 @@ const OTPVerification = () => {
   const inputRefs = useRef([]);
 
   const dispatch = useDispatch();
-  const {  user, userError, userMessage, userSuccess } = useSelector((state) => state.auth);
+  const { user, userError, userMessage, userSuccess } = useSelector((state) => state.auth);
 
   // Handle side effects
   useEffect(() => {
@@ -88,11 +88,12 @@ const OTPVerification = () => {
     if (enteredOtp.length === 5) {
       const otpData = {
         id: user?._id,
-        otp,
+        otp: Number(enteredOtp), // ✅ convert string to number here
       };
       dispatch(verifyOtp(otpData));
     } else {
       setIsError(true);
+      toast.error("Please enter a valid 5-digit OTP");
     }
   };
 
@@ -100,7 +101,7 @@ const OTPVerification = () => {
     console.log('Resending OTP...');
     setResendDisabled(true);
     setCountdown(30);
-    // You can trigger a resend API call here
+    // Optional: Call resend OTP API here
   };
 
   return (
@@ -142,9 +143,7 @@ const OTPVerification = () => {
             <>
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">OTP Verification</h2>
-                <p className="text-gray-600">
-                  We've sent a 5-digit code to your email/phone
-                </p>
+                <p className="text-gray-600">We've sent a 5-digit code to your email/phone</p>
               </div>
 
               <form onSubmit={handleSubmit}>

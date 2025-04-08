@@ -10,6 +10,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import SignUp from "./pages/Auth/SignUp";
 import SignIn from "./pages/Auth/Signin";
 import OTPVerification from "./pages/Auth/OTPVerification";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 const App = () => {
 
@@ -40,11 +41,19 @@ const App = () => {
             <Route path="/student">
               <Route path="dashboard" element={<StudentDashboard />} />
             </Route>
-
+{/* Users */}
             <Route path="/">
               <Route path="register" element={<SignUp />} />
               <Route path="login" element={<SignIn />} />
               <Route path="otp/:id" element={<OTPVerification />} />
+            </Route>
+
+
+            {/* Admin */}
+
+            <Route path="/admin">
+            <Route path="" element={<AdminDashboard />} />
+
             </Route>
           </Routes>
      

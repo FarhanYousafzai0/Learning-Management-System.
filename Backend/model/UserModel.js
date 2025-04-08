@@ -27,11 +27,15 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'user'
+        default: 'student'
     },
     otp: {
         type: Number,
         default: null // or default: 0 depending on your logic
+    },
+    batch_no:{
+        type:Number,
+        default:null
     }
     
 
