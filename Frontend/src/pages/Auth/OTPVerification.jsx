@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { userReset, verifyOtp } from '../../features/User/userSlice';
 
 const OTPVerification = () => {
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '']);
   const [activeInput, setActiveInput] = useState(0);
   const [isError, setIsError] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
@@ -9,6 +12,25 @@ const OTPVerification = () => {
   const [countdown, setCountdown] = useState(30);
   const inputRefs = useRef([]);
 
+  const dispatch = useDispatch();
+  const {  user, userError, userMessage, userSuccess } = useSelector((state) => state.auth);
+
+  // Handle side effects
+  useEffect(() => {
+    if (userError) {
+      toast.error(userMessage);
+      setIsError(true);
+      dispatch(userReset());
+    }
+
+    if (userSuccess) {
+      setIsVerified(true);
+      setIsError(false);
+      dispatch(userReset());
+    }
+  }, [userError, userMessage, userSuccess, dispatch]);
+
+  // Countdown logic
   useEffect(() => {
     if (resendDisabled) {
       const timer = setInterval(() => {
@@ -32,8 +54,7 @@ const OTPVerification = () => {
       newOtp[index] = value;
       setOtp(newOtp);
       setIsError(false);
-
-      if (index < 5 && value) {
+      if (index < 4 && value) {
         setActiveInput(index + 1);
         inputRefs.current[index + 1].focus();
       }
@@ -53,30 +74,23 @@ const OTPVerification = () => {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pasteData = e.clipboardData.getData('text/plain').slice(0, 6);
-    if (/^[0-9]{6}$/.test(pasteData)) {
+    const pasteData = e.clipboardData.getData('text/plain').slice(0, 5);
+    if (/^[0-9]{5}$/.test(pasteData)) {
       const newOtp = pasteData.split('');
       setOtp(newOtp);
-      setActiveInput(Math.min(5, newOtp.length - 1));
+      setActiveInput(Math.min(4, newOtp.length - 1));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const enteredOtp = otp.join('');
-    if (enteredOtp.length === 6) {
-      // Here you would typically verify the OTP with your backend
-      console.log('Verifying OTP:', enteredOtp);
-      
-      // Simulate verification
-      setTimeout(() => {
-        if (enteredOtp === '123456') { // Replace with your actual verification logic
-          setIsVerified(true);
-          setIsError(false);
-        } else {
-          setIsError(true);
-        }
-      }, 1000);
+    if (enteredOtp.length === 5) {
+      const otpData = {
+        id: user?._id,
+        otp,
+      };
+      dispatch(verifyOtp(otpData));
     } else {
       setIsError(true);
     }
@@ -86,7 +100,7 @@ const OTPVerification = () => {
     console.log('Resending OTP...');
     setResendDisabled(true);
     setCountdown(30);
-    // Here you would call your API to resend OTP
+    // You can trigger a resend API call here
   };
 
   return (
@@ -116,7 +130,7 @@ const OTPVerification = () => {
               <button
                 onClick={() => {
                   setIsVerified(false);
-                  setOtp(['', '', '', '', '', '']);
+                  setOtp(['', '', '', '', '']);
                   setActiveInput(0);
                 }}
                 className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 transition duration-200"
@@ -129,7 +143,7 @@ const OTPVerification = () => {
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">OTP Verification</h2>
                 <p className="text-gray-600">
-                  We've sent a 6-digit code to your email/phone
+                  We've sent a 5-digit code to your email/phone
                 </p>
               </div>
 
@@ -165,7 +179,7 @@ const OTPVerification = () => {
 
                 <button
                   type="submit"
-                  className="w-full cursor-pointer bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 transition duration-200 mb-4"
+                  className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 transition duration-200 mb-4"
                 >
                   Verify
                 </button>
@@ -173,7 +187,6 @@ const OTPVerification = () => {
                 <div className="text-center text-sm text-gray-600">
                   Didn't receive code?{' '}
                   <button
-                  
                     type="button"
                     onClick={handleResend}
                     disabled={resendDisabled}
@@ -197,23 +210,9 @@ const OTPVerification = () => {
           animation: shake 0.5s;
         }
         @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          10%,
-          30%,
-          50%,
-          70%,
-          90% {
-            transform: translateX(-5px);
-          }
-          20%,
-          40%,
-          60%,
-          80% {
-            transform: translateX(5px);
-          }
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
       `}</style>
     </div>

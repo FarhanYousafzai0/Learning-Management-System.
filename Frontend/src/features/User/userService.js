@@ -1,16 +1,32 @@
-import { retry } from '@reduxjs/toolkit/query';
-import axios from 'axios'
-
+import axios from 'axios';
 
 const base_url = 'http://localhost:5001/api/user';
 
+// Set user to localStorage
+const saveUserToStorage = (data) => {
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data));
+  }
+};
 
-export const regUser = async(userData)=>{
+// Register User
+export const regUser = async (userData) => {
+  const response = await axios.post(`${base_url}/register`, userData);
+  saveUserToStorage(response.data);
+  return response.data;
+};
 
-    const response = await axios.post(`${base_url}/register`,userData)
-    if(response.data){
-        localStorage.setItem("user",JSON.stringify(response.data))
-    }
-return response.data
- 
-}
+// Login User
+export const logUser = async (userData) => {
+  const response = await axios.post(`${base_url}/login`, userData);
+  saveUserToStorage(response.data);
+  return response.data;
+};
+
+// OTP Verification
+export const otpVerify = async (otpData) => {
+  const response = await axios.post(`${base_url}/otp/${otpData.id}`, {
+    otp: otpData.otp,
+  });
+  return response.data;
+};

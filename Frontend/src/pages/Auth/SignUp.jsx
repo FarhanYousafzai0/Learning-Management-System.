@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +21,10 @@ const SignUp = () => {
   const { name, username, email, gender, password, c_password } = formFields;
 
   const dispatch = useDispatch();
-  const { userLoading, userError, userMessage, userSuccess } = useSelector(
+const navigate = useNavigate()
+
+
+  const {user, userLoading, userError, userMessage, userSuccess } = useSelector(
     (state) => state.auth
   );
 
@@ -29,8 +32,16 @@ const SignUp = () => {
     if (userError) {
       toast.error(userMessage);
     }
+
+    if(userSuccess){
+
+      navigate(`/otp/${user?._id}`)
+    }
     dispatch(userReset());
   }, [userError, userMessage, dispatch]);
+
+
+
 
   const handleChange = (e) => {
     setFormFields({
