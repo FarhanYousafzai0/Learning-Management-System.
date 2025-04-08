@@ -9,51 +9,50 @@ export const sidebar_data = [
     icon: <FaBasketShopping />,
     list: [
       {
-        id: 2,
+        id: 101,
         title: "All courses",
       },
       {
-        id: 3,
+        id: 102,
         title: "Course Category",
       },
       {
-        id: 4,
+        id: 103,
         title: "Add Course",
       },
     ],
   },
   {
-    id: 5,
+    id: 2,
     title: "Add User",
     icon: <PiStudent />,
   },
   {
-    id: 50,
+    id: 3,
     title: "All Users",
     icon: <PiStudent />,
   },
   {
-    id: 6,
+    id: 4,
     title: "Instructors",
-    icon: <FaChalkboardTeacher />,
-
+    icon: <FaChalkboardTeacher/>,
     list: [
       {
-        id: 2,
+        id: 104,
         title: "Instructors",
       },
       {
-        id: 3,
+        id: 105,
         title: "Instructor details",
       },
       {
-        id: 4,
+        id: 106,
         title: "Instructor requests",
       },
     ],
   },
   {
-    id: 6,
+    id: 5,
     title: "Reviews",
     icon: <FaChartBar />,
   },
@@ -63,7 +62,7 @@ export const sidebar_data = [
     icon: <FaChartBar />,
   },
   {
-    id: 6,
+    id: 7,
     title: "Admin Setting",
     icon: <FaChartBar />,
   },
