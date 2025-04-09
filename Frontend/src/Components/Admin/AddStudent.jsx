@@ -32,7 +32,7 @@ const AddStudent = () => {
     }
 
     if (userSuccess) {
-      toast.success('Student Added Successfully');
+      toast.success(' Registerd Successfully');
     }
 
     dispatch(userReset());
