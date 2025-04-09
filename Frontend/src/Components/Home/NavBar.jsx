@@ -29,7 +29,7 @@ const NavBar = () => {
       </div>
 
       {/* Navigation Menu */}
-      <ul className="hidden  lg:flex items-center gap-3">
+      <ul className="hidden  lg:flex items-center gap-3 z-50">
         {nav_data.map((item, index) => (
           <li key={index} className="relative group text-black cursor-pointer">
             <span className="hover:text-[#066AC9] flex items-center gap-1 transition-all text-gray-700">

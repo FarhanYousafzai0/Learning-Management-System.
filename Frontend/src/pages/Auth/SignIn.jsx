@@ -2,56 +2,62 @@ import React, { useState, useEffect } from 'react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userReset } from '../../features/User/userSlice';
+import { logUserData } from '../../features/User/userSlice';
 import toast from 'react-hot-toast';
+import { userReset } from '../../features/User/userSlice';
 
 const SignIn = () => {
   const [formFields, setFormFields] = useState({
     username: '',
-    password: '',
+    password: ''
   });
+
   const { username, password } = formFields;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { userError, userSuccess, userMessage } = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (userError) {
       toast.error(userMessage);
     }
 
     if (userSuccess) {
-      toast.success("Login Successful!");
+      toast.success("Login Successfully!");
+      navigate('/')
     }
 
     dispatch(userReset());
-  }, [userError, userMessage, userSuccess, dispatch]);
+  }, [userError, userSuccess, userMessage, dispatch]);
 
   const handleChange = (e) => {
     setFormFields({
       ...formFields,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
-  // Submit Function
   const handleSubmit = (e) => {
-   
+    e.preventDefault();
     const logData = {
       username,
-      password,
+      password
     };
-
+    dispatch(logUserData(logData));
   };
 
   return (
-    <div className="w-screen h-screen relative">
-      {/* Achievements */}
+    <div className="w-screen h-screen relative overflow-x-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2">
+        {/* Left Side */}
         <div className="flex flex-col gap-8 text-center justify-center bg-[#E6F0F9] h-screen w-full p-5">
           <div className="relative">
-            <h1 className="text-2xl md:text-4xl font-bold">Welcome to our largest community</h1>
+            <h1 className="text-2xl md:text-4xl font-bold">
+              Welcome to our largest community
+            </h1>
             <p className="text-lg">Let's learn something new today!</p>
           </div>
 
@@ -88,21 +94,22 @@ const SignIn = () => {
                 </div>
               </div>
             </div>
-
             <p className="text-sm md:text-lg">4k+ Students joined us, now it's your turn.</p>
           </div>
         </div>
 
-        {/* Form-section */}
+        {/* Right Form Section */}
         <div className="px-8 md:px-20 flex flex-col bg-white items-center py-5 relative text-start w-full h-screen">
-          {/* Heading */}
           <div className="flex flex-col text-start w-full max-w-md">
-            <h1 className="text-2xl md:text-4xl font-bold my-2">Login into PNY!</h1>
-            <p className="text-sm md:text-lg text-gray-500">Nice to see you! Please login with your account.</p>
+            <h1 className="text-2xl md:text-4xl font-bold my-2">
+              Login into PNY!
+            </h1>
+            <p className="text-sm md:text-lg text-gray-500">
+              Nice to see you! Please login with your account.
+            </p>
           </div>
 
-          {/* Form */}
-          <form  className="w-full max-w-md mt-5">
+          <form className="w-full max-w-md mt-5" onSubmit={handleSubmit}>
             {/* Username */}
             <div className="flex flex-col mb-4">
               <label className="mb-1">Username*</label>
@@ -135,10 +142,10 @@ const SignIn = () => {
               </div>
             </div>
 
-            {/* Sign In Button */}
+            {/* Submit */}
             <button
-              onClick={handleSubmit}
-              className="w-full bg-[#0F9E99] cursor-pointer text-white py-3 rounded-md hover:bg-[#0d8c88] transition"
+              type="submit"
+              className="w-full bg-[#0F9E99] text-white py-3 rounded-md hover:bg-[#0d8c88] transition"
             >
               Sign In
             </button>
@@ -155,9 +162,9 @@ const SignIn = () => {
               </button>
             </div>
 
-            {/* Already have an account */}
+            {/* Register Link */}
             <p className="text-center mt-4 text-sm">
-              Don't have an account?{' '}
+              Create an account?{' '}
               <Link
                 to="/user/register"
                 className="text-[#0F9E99] font-semibold transition-all hover:underline"

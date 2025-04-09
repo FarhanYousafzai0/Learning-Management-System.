@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {  logUser, otpVerify, regUser } from "./userService";
+import { logUser, otpVerify, regUser } from "./userService";
 
 // Get user from localStorage
 const isUser = JSON.parse(localStorage.getItem("user"));
@@ -26,34 +26,31 @@ export const regUserData = createAsyncThunk(
     }
 );
 
-
-// Login:
-
-export const logUserData = createAsyncThunk("login-user",async(userData,thunkAPI)=>{
-    try {
-        return await logUser();
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data.error);
+// Login user - AsyncThunk
+export const logUserData = createAsyncThunk(
+    "login-user",
+    async (userData, thunkAPI) => {
+        try {
+            return await logUser(userData); // ✅ Fixed: passing userData
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.data?.error || "Login failed");
+        }
     }
-})
-
-
-
-
+);
 
 // Verify OTP - AsyncThunk
 export const verifyOtp = createAsyncThunk(
     "verify-otp",
     async (otpData, thunkAPI) => {
-      try {
-        return await otpVerify(otpData);
-      } catch (error) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.error || "Something went wrong"
-        );
-      }
+        try {
+            return await otpVerify(otpData);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.error || "Something went wrong"
+            );
+        }
     }
-  );
+);
 
 // Create userSlice
 export const userSlice = createSlice({
@@ -86,8 +83,8 @@ export const userSlice = createSlice({
                 state.user = action.payload;
                 state.userMessage = "User registered successfully";
             })
-            // Login-User:
 
+            // Login user
             .addCase(logUserData.pending, (state) => {
                 state.userLoading = true;
             })
@@ -102,7 +99,7 @@ export const userSlice = createSlice({
                 state.userError = false;
                 state.userSuccess = true;
                 state.user = action.payload;
-                state.userMessage = "User registered successfully";
+                state.userMessage = "User logged in successfully"; // ✅ better message
             })
 
             // Verify OTP
