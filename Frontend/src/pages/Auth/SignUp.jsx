@@ -16,15 +16,16 @@ const SignUp = () => {
     gender: '',
     password: '',
     c_password: '',
+    batch_no: '',
+    course_name: '',
   });
 
-  const { name, username, email, gender, password, c_password } = formFields;
+  const { name, username, email, gender, password, c_password, batch_no, course_name } = formFields;
 
   const dispatch = useDispatch();
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
-
-  const {user, userLoading, userError, userMessage, userSuccess } = useSelector(
+  const { user, userLoading, userError, userMessage, userSuccess } = useSelector(
     (state) => state.auth
   );
 
@@ -33,15 +34,11 @@ const navigate = useNavigate()
       toast.error(userMessage);
     }
 
-    if(userSuccess){
-
-      navigate(`/otp/${user?._id}`)
+    if (userSuccess) {
+      toast.success('Student Added Successfully');
     }
     dispatch(userReset());
   }, [userError, userMessage, dispatch]);
-
-
-
 
   const handleChange = (e) => {
     setFormFields({
@@ -64,19 +61,22 @@ const navigate = useNavigate()
       email,
       gender,
       password,
+      batch_no,
+      course_name,
     };
 
     dispatch(regUserData(regData));
 
-
     setFormFields({
       name: '',
-    username: '',
-    email: '',
-    gender: '',
-    password: '',
-    c_password: '',
-    })
+      username: '',
+      email: '',
+      gender: '',
+      password: '',
+      c_password: '',
+      batch_no: '',
+      course_name: '',
+    });
   };
 
   return (
@@ -117,7 +117,7 @@ const navigate = useNavigate()
         </div>
 
         {/* Right Section */}
-        <div className="px-8 md:px-20 py-10 flex flex-col bg-white items-center w-full max-h-screen ">
+        <div className="px-8 md:px-20 py-10 flex flex-col bg-white items-center w-full max-h-screen">
           <div className="text-start w-full max-w-2xl">
             <h1 className="text-2xl md:text-4xl font-bold mb-2">
               Sign up for your account!
@@ -220,6 +220,32 @@ const navigate = useNavigate()
                   />
                   <FaLock className="absolute left-3 top-4 text-gray-400" />
                 </div>
+              </div>
+
+              {/* Batch No */}
+              <div>
+                <label className="mb-1 block">Batch No*</label>
+                <input
+                  type="text"
+                  name="batch_no"
+                  value={batch_no}
+                  onChange={handleChange}
+                  placeholder="Batch Number"
+                  className="w-full h-12 px-4 bg-gray-100 rounded-md"
+                />
+              </div>
+
+              {/* Course Name */}
+              <div>
+                <label className="mb-1 block">Course Name*</label>
+                <input
+                  type="text"
+                  name="course_name"
+                  value={course_name}
+                  onChange={handleChange}
+                  placeholder="Course Name"
+                  className="w-full h-12 px-4 bg-gray-100 rounded-md"
+                />
               </div>
             </div>
 

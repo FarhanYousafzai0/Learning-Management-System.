@@ -10,9 +10,9 @@ import nodemailer from 'nodemailer';
 export const register = asyncHandler(async (req, res) => {
     const generateOTP = () => Math.floor(10000 + Math.random() * 90000); // Always 5-digit OTP
 
-    const { name, username, password, email, gender } = req.body;
+    const { name, username, password, email, gender,batch_no,course_name,role } = req.body;
 
-    if (!name || !username || !password || !email || !gender) {
+    if (!name || !username || !password || !email || !gender || !batch_no || !course_name || !role ) {
         return res.status(400).json({ error: "Please enter all the fields!" });
     }
 
@@ -36,7 +36,11 @@ export const register = asyncHandler(async (req, res) => {
         email,
         password: hashedPassword,
         gender,
-        otp
+        otp,
+        batch_no,
+        course_name,
+        role
+
     });
 
     const { password: _, otp: __, ...userWithoutSensitive } = registerData._doc;
