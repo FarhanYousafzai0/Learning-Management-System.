@@ -451,7 +451,7 @@ export const nav_data = [
       {
         id: 4234,
         title: "Admin",
-        link: "",
+        link: "/admin/dashboard",
         icon: <FaUser />,
       },
       {

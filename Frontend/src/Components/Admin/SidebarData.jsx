@@ -11,6 +11,7 @@ export const sidebar_data = [
       {
         id: 101,
         title: "All courses",
+        
       },
       {
         id: 102,
