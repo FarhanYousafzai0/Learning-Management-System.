@@ -24,7 +24,8 @@ const Footer = () => {
             alt="Logo"
           />
           <p className='text-sm text-gray-600 leading-relaxed'>
-            PNY education theme, built specifically for education centers dedicated to teaching and involving learners.
+          PNY Trainings
+          Pakistan's No.1 IT Training Institute.
           </p>
 
           {/* Social Icons */}

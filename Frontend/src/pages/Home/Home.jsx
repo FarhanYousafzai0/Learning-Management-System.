@@ -8,6 +8,7 @@ import TrendingCourses from '../../Components/Home/TrendingCourses'
 import FeedBack from '../../Components/Home/FeedBack'
 import Footer from '../../Components/Home/Footer'
 import {motion} from 'motion/react'
+import WhatsAppButton from '../../Components/Home/WhatsAppButton'
 const Home = () => {
   
  
@@ -22,6 +23,7 @@ const Home = () => {
       <BecomeInstructor />
       <TrendingCourses />
       <FeedBack/>
+      <WhatsAppButton/>
       <Footer/>
     </>
   )

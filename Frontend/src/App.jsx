@@ -11,6 +11,7 @@ import SignUp from "./pages/Auth/SignUp";
 import SignIn from "./pages/Auth/Signin";
 import OTPVerification from "./pages/Auth/OTPVerification";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import About from "./pages/Admin/About";
 
 const App = () => {
 
@@ -49,6 +50,13 @@ const App = () => {
             </Route>
 
 
+
+{/* About */}
+
+
+<Route path="/">
+<Route path="about" element={<About/>} />
+</Route>
             {/* Admin */}
 
             <Route path="/admin">

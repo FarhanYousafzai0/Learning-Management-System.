@@ -499,6 +499,10 @@ export const nav_data = [
         ],
       },
     ],
-  },
+  },{
+    id:4344,
+    title: "About Us",
+    link: "/about",
+  }
   
 ];
