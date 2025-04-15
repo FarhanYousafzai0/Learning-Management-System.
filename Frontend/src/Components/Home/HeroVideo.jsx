@@ -56,7 +56,7 @@ export default function HeroVideo() {
             width="100%"
             height="500px"
             className="rounded-xl"
-            src="https://www.youtube-nocookie.com/embed/tXHviS-4ygo?autoplay=0&amp;controls=0&amp;disablekb=1&amp;playsinline=0&amp;cc_load_policy=0&amp;cc_lang_pref=auto&amp;widget_referrer=https%3A%2F%2Fpreview.themeforest.net%2F&amp;rel=0&amp;showinfo=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;customControls=true&amp;noCookie=true&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fthemes.stackbros.in&amp;widgetid=5"
+            src="https://www.youtube.com/embed/IZp1mbBAaRo?si=oa-BrA6iEJPEVNjQ"
           ></iframe>
         </div>
       </Modal>

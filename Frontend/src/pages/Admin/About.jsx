@@ -29,7 +29,7 @@ const About = () => {
    <div className="bg-gradient-to-br overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[#DCF1F4] "></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 text-white "></div>
         <video 
           autoPlay 
           loop 
@@ -47,13 +47,13 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold text-white mb-6"
           >
-            <span className="text-blue-400">About PNY</span>
+            <span className="text-white">About PNY</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl  max-w-3xl mx-auto"
+            className="text-xl  max-w-3xl mx-auto text-white"
           >
             Empowering minds and transforming futures through innovative education since 2008
           </motion.p>
@@ -133,7 +133,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r bg-[#DCF1F4] ">
+      <section className="py-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
         <div className="container mx-auto px-6">
           <motion.div 
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
@@ -159,7 +159,7 @@ const About = () => {
                 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="flex justify-center mb-4 text-blue-300">
+                <div className="flex justify-center mb-4 text-white">
                   {stat.icon}
                 </div>
                 <h3 className="text-4xl font-bold mb-2 ">{stat.value}</h3>
@@ -242,7 +242,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-black text-white">
+      <section className="py-24 bg-gradient-to-br from-indigo-500 to-black text-white">
         <div className="container mx-auto px-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -258,7 +258,7 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto"
+            className="text-xl text-white mb-8 max-w-2xl mx-auto"
           >
             Join thousands of successful PNY alumni who've launched rewarding tech careers
           </motion.p>

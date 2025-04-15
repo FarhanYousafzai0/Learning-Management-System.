@@ -53,11 +53,13 @@ transition={{
 
         <div className="flex items-center gap-1 md:gap-3 ">
 
-          <motion.button
+          <motion.a
+          href='https://pnytrainings.com/courses/'
+          target='_blank'
           whileTap={{
             scale:0.95
           }}
-          className='bg-rose-100 text-red-500 cursor-pointer flex font-semibold relative whitespace-nowrap px-6 rounded-md py-3'>Get Started</motion.button>
+          className='bg-rose-100 text-red-500 cursor-pointer flex font-semibold relative whitespace-nowrap px-6 rounded-md py-3'>Get Started</motion.a>
           
 
           <HeroVideo/>

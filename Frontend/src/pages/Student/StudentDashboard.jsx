@@ -53,7 +53,7 @@ className="min-h-[100px]  md:min-h-[200px] bg-[#1D3B53]">
 
     {/* Button */}
     <div className="flex justify-center md:justify-end  mt-4 md:mt-0">
-    <QuizModal/>
+      
     </div>
   </div>
  <div className='flex gap-3'>

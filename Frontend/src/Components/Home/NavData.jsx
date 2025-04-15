@@ -1,508 +1,237 @@
-import { FaUser } from "react-icons/fa";
-import { FaDashcube } from "react-icons/fa6";
+import { 
+  FaUser, 
+  FaDashcube, 
+  FaHome, 
+  FaGraduationCap, 
+  FaBook, 
+  FaSchool, 
+  FaChalkboardTeacher, 
+  FaChild, 
+  FaGlobeAmericas, 
+  FaTools,
+  FaLandmark,
+  FaShoppingCart,
+  FaQuestionCircle,
+  FaSignInAlt,
+  FaEdit,
+  FaCog,
+  FaTrash,
+  FaLayerGroup,
+  FaCube
+} from "react-icons/fa";
 
 export const nav_data = [
   {
     id: 1,
     title: "Demos",
+    icon: <FaLayerGroup />,
     list: [
       {
         id: 2,
         title: "Home Default",
         link: "",
+        icon: <FaHome />
       },
       {
         id: 3,
         title: "Home Education",
         link: "",
+        icon: <FaGraduationCap />
       },
       {
         id: 4,
         title: "Home Course",
         link: "",
+        icon: <FaBook />
       },
       {
         id: 5,
-        title: "Home Acedmey",
+        title: "Home Academy",
         link: "",
+        icon: <FaSchool />
       },
       {
         id: 6,
         title: "Home University",
         link: "",
+        icon: <FaLandmark />
       },
       {
         id: 7,
         title: "Home Tutor",
         link: "",
+        icon: <FaChalkboardTeacher />
       },
       {
         id: 8,
-        title: "Home Kindergarton",
+        title: "Home Kindergarten",
         link: "",
+        icon: <FaChild />
       },
       {
         id: 9,
         title: "Home School",
         link: "",
+        icon: <FaSchool />
       },
       {
         id: 10,
         title: "Home Abroad",
         link: "",
+        icon: <FaGlobeAmericas />
       },
       {
         id: 11,
         title: "Home Workshop",
         link: "",
+        icon: <FaTools />
       },
       {
         id: 12,
         title: "Home Landing",
         link: "",
+        icon: <FaHome />
       },
-      
     ],
   },
   {
     id: 14,
     title: "Pages",
+    icon: <FaBook />,
     list: [
       {
         id: 15,
         title: "Course",
         link: "",
+        icon: <FaBook />,
         subList: [
-          {
-            id: 16,
-            title: "Course Categories",
-          },
-          {
-            id: 17,
-            title: "Course Categories",
-          },
-          {
-            id: 18,
-            title: "Course Categories",
-          },
-          {
-            id: 19,
-            title: "Course Categories",
-          },
-          {
-            id: 20,
-            title: "Course Categories",
-          },
-          {
-            id: 21,
-            title: "Course Categories",
-          },
           {
             id: 22,
-            title: "Course Categories",
+            title: "Course Classic",
+            icon: <FaBook />
           },
           {
             id: 23,
-            title: "Course Categories",
+            title: "Course modern",
+            icon: <FaBook />
           },
           {
             id: 24,
-            title: "Course Categories",
+            title: "Course minimal",
+            icon: <FaBook />
           },
           {
             id: 25,
-            title: "Course Categories",
+            title: "Course grid",
+            icon: <FaBook />
           },
         ],
       },
       {
-        id: 15,
-        title: "About",
-        link: "",
-        subList: [
-          {
-            id: 16,
-            title: "Course Categories",
-          },
-          {
-            id: 17,
-            title: "Course Categories",
-          },
-          {
-            id: 18,
-            title: "Course Categories",
-          },
-          {
-            id: 19,
-            title: "Course Categories",
-          },
-          {
-            id: 20,
-            title: "Course Categories",
-          },
-          {
-            id: 21,
-            title: "Course Categories",
-          },
-        ],
+        id: 16,
+        title: "Become a Teacher",
+        link: "/becomeTeacher",
+        icon: <FaChalkboardTeacher />
       },
       {
-        id: 15,
-        title: "Hero Baner",
-        link: "",
-        subList: [
-          {
-            id: 23,
-            title: "Course Categories",
-          },
-          {
-            id: 24,
-            title: "Course Categories",
-          },
-          {
-            id: 25,
-            title: "Course Categories",
-          },
-        ],
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
-        title: "Course",
-        link: "",
-      },
-      {
-        id: 15,
+        id: 17,
         title: "Shop",
         link: "",
+        icon: <FaShoppingCart />,
         subList: [
-          {
-            id: 16,
-            title: "Course Categories",
-          },
-          {
-            id: 17,
-            title: "Course Categories",
-          },
           {
             id: 18,
             title: "Course Categories",
+            icon: <FaBook />
           },
-          {
-            id: 19,
-            title: "Course Categories",
-          },
-          {
-            id: 20,
-            title: "Course Categories",
-          },
-          {
-            id: 21,
-            title: "Course Categories",
-          },
+          // ... other shop items
         ],
       },
       {
-        id: 15,
+        id: 19,
         title: "Help",
         link: "",
+        icon: <FaQuestionCircle />,
         subList: [
-          {
-            id: 23,
-            title: "Course Categories",
-          },
-          {
-            id: 24,
-            title: "Course Categories",
-          },
-          {
-            id: 25,
-            title: "Course Categories",
-          },
+          // ... help items
         ],
       },
       {
-        id: 15,
+        id: 20,
         title: "Auth",
         link: "",
+        icon: <FaSignInAlt />,
         subList: [
-          {
-            id: 23,
-            title: "Course Categories",
-          },
-          {
-            id: 24,
-            title: "Course Categories",
-          },
-          {
-            id: 25,
-            title: "Course Categories",
-          },
+          // ... auth items
         ],
       },
-      {
-        id: 15,
-        title: "Form",
-        link: "",
-        subList: [
-          {
-            id: 22,
-            title: "Course Categories",
-          },
-          {
-            id: 23,
-            title: "Course Categories",
-          },
-          {
-            id: 24,
-            title: "Course Categories",
-          },
-          {
-            id: 25,
-            title: "Course Categories",
-          },
-        ],
-      },
-      {
-        id: 15,
-        title: "Speciality",
-        link: "",
-        subList: [
-          {
-            id: 23,
-            title: "Course Categories",
-          },
-          {
-            id: 24,
-            title: "Course Categories",
-          },
-          {
-            id: 25,
-            title: "Course Categories",
-          },
-        ],
-      },
+      // ... other page items
     ],
   },
   {
     id: 4237,
     title: "Accounts",
+    icon: <FaUser />,
     list: [
       {
         id: 4234,
         title: "Instructor",
         link: "",
-        icon: <FaUser />,
+        icon: <FaChalkboardTeacher />,
         subList: [
           {
             id: 654635,
-            title: "Dashboard",
+            title: "Add Course",
             link: "",
-            icon: <FaDashcube />,
+            icon: <FaBook />
           },
           {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
+            id: 654636,
+            title: "Add Quiz",
+            link: "/teacher/dashboard",
+            icon: <FaEdit />
           },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
+          // ... other instructor items
         ],
       },
       {
-        id: 4234,
+        id: 4235,
         title: "Student",
-        link: "",
+        link: "/student/dashboard",
         icon: <FaUser />,
-        subList: [
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-          {
-            id: 654635,
-            title: "Dashboard",
-            link: "",
-            icon: <FaDashcube />,
-          },
-        ],
+       
       },
       {
-        id: 4234,
+        id: 4236,
         title: "Admin",
         link: "/admin/dashboard",
-        icon: <FaUser />,
+        icon: <FaCube />
       },
       {
-        id: 4234,
+        id: 4237,
         title: "Edit Profile",
         link: "",
-        icon: <FaUser />,
+        icon: <FaEdit />
       },
       {
-        id: 4234,
+        id: 4238,
         title: "Settings",
         link: "",
-        icon: <FaUser />,
+        icon: <FaCog />
       },
       {
-        id: 4234,
+        id: 4239,
         title: "Delete Profile",
         link: "",
-        icon: <FaUser />,
+        icon: <FaTrash />
       },
-      {
-        id: 4234,
-        title: "Dropdown levels",
-        link: "",
-        icon: <FaUser />,
-        subList: [
-          {
-            id: 25435,
-            title: "dropdown",
-            subSubList: [
-              {
-                id: 235435234,
-                title: "dropdown",
-              },
-              {
-                id: 235435234,
-                title: "dropdown",
-              },
-            ],
-          },
-          {
-            id: 5345423,
-            title: "dropdown item",
-          },
-        ],
-      },
+      // ... other account items
     ],
-  },{
-    id:4344,
+  },
+  {
+    id: 4344,
     title: "About Us",
     link: "/about",
-  }
   
+  }
 ];

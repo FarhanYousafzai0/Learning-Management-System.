@@ -12,6 +12,8 @@ import SignIn from "./pages/Auth/Signin";
 import OTPVerification from "./pages/Auth/OTPVerification";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import About from "./pages/Admin/About";
+import BecomeTeacherForm from "./pages/Teacher/BecomeTeacherForm";
+
 
 const App = () => {
 
@@ -48,9 +50,11 @@ const App = () => {
               <Route path="login" element={<SignIn />} />
               <Route path="otp/:id" element={<OTPVerification />} />
             </Route>
+{/* Teacher */}
 
-
-
+            <Route path="/">
+              <Route path="becomeTeacher" element={<BecomeTeacherForm />} />
+              </Route>
 {/* About */}
 
 
