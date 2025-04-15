@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaChalkboardTeacher, FaUserGraduate, FaCalendarAlt, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaUserGraduate, FaCalendarAlt, FaPhone, FaEnvelope, FaHome } from 'react-icons/fa';
 import { MdSubject, MdTransgender } from 'react-icons/md';
 import { RiGraduationCapFill } from 'react-icons/ri';
 import { IoMdCloudUpload } from 'react-icons/io';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const BecomeTeacherForm = () => {
@@ -30,7 +32,11 @@ const BecomeTeacherForm = () => {
       }
 
       // Replace with your API endpoint
-     
+      // await axios.post('/api/teacher-applications', formData, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // });
 
       setSubmitSuccess(true);
       reset();
@@ -65,24 +71,37 @@ const BecomeTeacherForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Join Our Team of <span className="text-indigo-600">Educators</span>
-          </h1>
-          <p className="mt-3 text-xl text-gray-500">
-            Share your knowledge and inspire the next generation of learners
-          </p>
+    <div className=" bg-gradient-to-r from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8 ">
+      {/* Animated Home Button */}
+      <motion.div
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ type: 'spring', stiffness: 100 }}
+        className="absolute top-4 left-4"
+      >
+        <Link
+          to="/"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:bg-indigo-50 transition-colors duration-200"
+        >
+          <FaHome className="text-indigo-600 text-xl" />
+        </Link>
+      </motion.div>
+
+      <div className="max-w-6xl mx-auto h-full">
+        <div className="text-center mb-4">
+          {/* <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Join Our Team of <span className="text-indigo-600">PNY</span>
+          </h1> */}
+         
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="flex flex-col lg:flex-row">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-h-[85vh]">
+          <div className="flex flex-col lg:flex-row h-full">
             {/* SVG Illustration Side */}
-            <div className="lg:w-1/2 bg-gradient-to-br from-indigo-500 to-purple-600 p-12 flex items-center justify-center">
+            <div className="lg:w-1/2 bg-gradient-to-br from-indigo-500 to-purple-600 p-8 flex items-center justify-center overflow-y-auto">
               <div className="text-white text-center">
                 <div className="max-w-md mx-auto">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-64">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-56">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" opacity="0.3"/>
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                     <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3"/>
@@ -90,7 +109,7 @@ const BecomeTeacherForm = () => {
                     <circle cx="12" cy="17" r="3" fill="currentColor" opacity="0.3"/>
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold mt-8 mb-4">Why Teach With Us?</h2>
+                <h2 className="text-2xl font-bold mt-6 mb-4">Why Teach With Us?</h2>
                 <ul className="space-y-3 text-left max-w-xs mx-auto">
                   <li className="flex items-center">
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,9 +134,9 @@ const BecomeTeacherForm = () => {
             </div>
 
             {/* Form Side */}
-            <div className="lg:w-1/2 p-8 sm:p-12">
+            <div className="lg:w-1/2 p-6 sm:p-8 overflow-y-auto">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {/* Full Name */}
                   <div className="sm:col-span-2">
                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -132,7 +151,7 @@ const BecomeTeacherForm = () => {
                         name="fullName"
                         type="text"
                         {...register("fullName", { required: "Full name is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="John Doe"
                       />
                     </div>
@@ -161,7 +180,7 @@ const BecomeTeacherForm = () => {
                             message: "Invalid email address"
                           }
                         })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -190,7 +209,7 @@ const BecomeTeacherForm = () => {
                             message: "Invalid phone number"
                           }
                         })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="1234567890"
                       />
                     </div>
@@ -213,7 +232,7 @@ const BecomeTeacherForm = () => {
                         name="subject"
                         type="text"
                         {...register("subject", { required: "Subject is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Mathematics"
                       />
                     </div>
@@ -235,7 +254,7 @@ const BecomeTeacherForm = () => {
                         id="qualification"
                         name="qualification"
                         {...register("qualification", { required: "Qualification is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                       >
                         <option value="">Select qualification</option>
                         <option value="High School">High School</option>
@@ -263,7 +282,7 @@ const BecomeTeacherForm = () => {
                         id="gender"
                         name="gender"
                         {...register("gender", { required: "Gender is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                       >
                         <option value="">Select gender</option>
                         <option value="Male">Male</option>
@@ -291,7 +310,7 @@ const BecomeTeacherForm = () => {
                         name="dob"
                         type="date"
                         {...register("dob", { required: "Date of birth is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 border focus:ring-indigo-500 focus:border-indigo-500"
+                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
                     {errors.dob && (
@@ -307,10 +326,10 @@ const BecomeTeacherForm = () => {
                     <div className="mt-1 flex items-center">
                       <label
                         htmlFor="profilePhoto"
-                        className="relative cursor-pointer bg-white rounded-md border border-gray-300 p-3 flex items-center justify-center w-full hover:border-indigo-500 hover:bg-indigo-50 transition duration-150"
+                        className="relative cursor-pointer bg-white rounded-md border border-gray-300 p-2 flex items-center justify-center w-full hover:border-indigo-500 hover:bg-indigo-50 transition duration-150"
                       >
                         <div className="flex flex-col items-center">
-                          <IoMdCloudUpload className="h-8 w-8 text-indigo-500 mb-2" />
+                          <IoMdCloudUpload className="h-6 w-6 text-indigo-500 mb-1" />
                           <span className="text-sm text-gray-600">
                             {profilePhoto ? 'Change photo' : 'Upload a photo'}
                           </span>
@@ -331,7 +350,7 @@ const BecomeTeacherForm = () => {
                         <img
                           src={profilePhoto}
                           alt="Profile preview"
-                          className="h-16 w-16 rounded-full object-cover"
+                          className="h-12 w-12 rounded-full object-cover"
                         />
                         <button
                           type="button"
@@ -368,7 +387,7 @@ const BecomeTeacherForm = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? (
                       <>
@@ -380,7 +399,7 @@ const BecomeTeacherForm = () => {
                       </>
                     ) : (
                       <>
-                        <FaChalkboardTeacher className="mr-2 h-5 w-5" />
+                        <FaChalkboardTeacher className="mr-2 h-4 w-4" />
                         Submit Application
                       </>
                     )}
