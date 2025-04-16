@@ -9,6 +9,7 @@ import FeedBack from '../../Components/Home/FeedBack'
 import Footer from '../../Components/Home/Footer'
 import {motion} from 'motion/react'
 import WhatsAppButton from '../../Components/Home/WhatsAppButton'
+import JourneyToSuccess from '../../Components/Home/JourneyToSuccess'
 const Home = () => {
 
   
@@ -24,6 +25,7 @@ const Home = () => {
       <Courses />
       <BecomeInstructor />
       <TrendingCourses />
+      <JourneyToSuccess/>
       <FeedBack/>
       <WhatsAppButton/>
       <Footer/>

@@ -28,37 +28,49 @@ const About = () => {
    <NavBar/>
    <div className="bg-gradient-to-br overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 text-white "></div>
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/pny-campus.mp4" type="video/mp4" />
-        </video>
-        
-        <div className="relative z-10 container mx-auto px-6 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold text-white mb-6"
-          >
-            <span className="text-white">About PNY</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl  max-w-3xl mx-auto text-white"
-          >
-            Empowering minds and transforming futures through innovative education since 2008
-          </motion.p>
-        </div>
-      </section>
+      <section className="relative w-full h-screen overflow-hidden">
+          {/* YouTube embed via IFRAME—not <video> */}
+          <iframe
+  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+  src="https://www.youtube.com/embed/jLTJQuQXl-8?autoplay=1&mute=1&loop=1&playlist=jLTJQuQXl-8&controls=0&modestbranding=1&showinfo=0&rel=0"
+  frameBorder="0"
+  allow="autoplay; encrypted-media"
+  allowFullScreen
+  title="PNY Trainings Background"
+/>
+
+
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-60 z-10" />
+
+          {/* Hero content */}
+          <div className="relative z-20 container mx-auto px-6 flex flex-col items-center justify-center h-full text-center">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-6xl font-bold text-white mb-6"
+            >
+              PNY Trainings
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl max-w-3xl mx-auto text-white"
+            >
+              Pakistan's No.1 IT Training Institute
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-2xl mt-4 max-w-2xl mx-auto text-white"
+            >
+              Certified Courses with Money‑Making Skills! Empower Yourself with Practical Skills that Open Doors to Lucrative Opportunities
+            </motion.p>
+          </div>
+        </section>
 
       {/* Our Story */}
       <section ref={ref} className="py-24 container mx-auto px-6">

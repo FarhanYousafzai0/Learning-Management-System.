@@ -43,7 +43,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="flex px-5 md:px-10 py-5 items-center justify-between shadow-lg">
+      <div className="flex px-5  md:px-10 py-5 items-center justify-between shadow-lg">
         {/* Logo and Category */}
         <div className="flex items-center gap-5">
           <Link to="/">
