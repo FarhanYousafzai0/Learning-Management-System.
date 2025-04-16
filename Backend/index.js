@@ -6,7 +6,7 @@ import { errorHandler } from './Middleware/errorMiddleware.js';
 import { connectDB } from './config/Connect.js';
 import cors from 'cors';
 import userRouter from './Routes/UserRoute.js';
-
+import teacherRouter from './Routes/TeacherRoute.js'
 dotenv.config();
 
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 // API Routes
 app.use('/api/quiz/', quizRouter);
 app.use('/api/user',userRouter)
+app.use('/api/teacher', teacherRouter);
 
 // Error Handling Middleware
 app.use(errorHandler);
