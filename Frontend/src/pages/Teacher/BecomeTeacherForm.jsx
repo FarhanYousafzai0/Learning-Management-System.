@@ -1,417 +1,448 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaChalkboardTeacher, FaUserGraduate, FaCalendarAlt, FaPhone, FaEnvelope, FaHome } from 'react-icons/fa';
-import { MdSubject, MdTransgender } from 'react-icons/md';
-import { RiGraduationCapFill } from 'react-icons/ri';
-import { IoMdCloudUpload } from 'react-icons/io';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { FaUserGraduate, FaEnvelope, FaPhone, FaChalkboardTeacher, FaCalendarAlt } from "react-icons/fa";
+import { RiGraduationCapFill } from "react-icons/ri";
+import { IoMdCloudUpload } from "react-icons/io";
+import { MdSubject, MdTransgender } from "react-icons/md";
+import { fetchTeachers, resetTeacherState } from "../../features/Teacher/TeacherSlice";
 
 const BecomeTeacherForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const [profilePhoto, setProfilePhoto] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [formFields, setFormFields] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    qualification: "",
+    gender: "",
+    dateOfBirth: "",
+    profilePhoto: null,
+  });
 
-  const handlePhotoChange = (e) => {
-    if (e.target.files[0]) {
-      setProfilePhoto(URL.createObjectURL(e.target.files[0]));
+  const [profilePreview, setProfilePreview] = useState(null);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
+  const dispatch = useDispatch();
+  const { teacherError, teacherSuccess, teacherMessage, teacherLoading } = useSelector(
+    (state) => state.teacher
+  );
+
+  useEffect(() => {
+    if (teacherError) {
+      toast.error(teacherMessage);
+      dispatch(resetTeacherState());
+    }
+    if (teacherSuccess) {
+      setSubmissionSuccess(true);
+      dispatch(resetTeacherState());
+    }
+  }, [teacherError, teacherSuccess, teacherMessage, dispatch]);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    
+    if (name === "profilePhoto") {
+      const file = files[0];
+      setFormFields(prev => ({ ...prev, [name]: file }));
+      if (file) {
+        setProfilePreview(URL.createObjectURL(file));
+      }
+    } else {
+      setFormFields(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const onSubmit = async (data) => {
-    setIsSubmitting(true);
-    try {
-      const formData = new FormData();
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-      if (data.profilePhoto[0]) {
-        formData.append('profileImage', data.profilePhoto[0]);
-      }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      // Replace with your API endpoint
-      // await axios.post('/api/teacher-applications', formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // });
-
-      setSubmitSuccess(true);
-      reset();
-      setProfilePhoto(null);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setIsSubmitting(false);
+    const formData = new FormData();
+    for (const key in formFields) {
+      if (formFields[key] !== null) {
+        formData.append(key, formFields[key]);
+      }
     }
+
+    dispatch(fetchTeachers(formData));
   };
 
-  if (submitSuccess) {
+  const resetForm = () => {
+    setFormFields({
+      fullName: "",
+      email: "",
+      phone: "",
+      subject: "",
+      qualification: "",
+      gender: "",
+      dateOfBirth: "",
+      profilePhoto: null,
+    });
+    setProfilePreview(null);
+    setSubmissionSuccess(false);
+  };
+
+  if (submissionSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50"
+      >
+        <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+          >
+            <svg className="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
             </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Application Submitted!</h2>
-          <p className="text-gray-600 mb-6">Your teacher application has been received. We'll review your qualifications and get back to you soon.</p>
-          <button 
-            onClick={() => setSubmitSuccess(false)}
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200"
+          </motion.div>
+          <motion.h2 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-3xl font-bold text-gray-800 mb-3"
           >
-            Submit Another Application
-          </button>
+            Application Received!
+          </motion.h2>
+          <motion.p 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="text-gray-600 mb-8"
+          >
+            Thank you for joining PNY's teaching team. We'll review your application and contact you shortly.
+          </motion.p>
+          <motion.button
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            onClick={resetForm}
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 cursor-pointer text-white py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-300"
+          >
+            Back to Form
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className=" bg-gradient-to-r from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8 ">
-      {/* Animated Home Button */}
-      <motion.div
-        initial={{ x: -100 }}
-        animate={{ x: 0 }}
-        transition={{ type: 'spring', stiffness: 100 }}
-        className="absolute top-4 left-4"
-      >
-        <Link
-          to="/"
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:bg-indigo-50 transition-colors duration-200"
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div className="container mx-auto flex flex-col lg:flex-row h-full">
+        {/* Illustration Side */}
+        <motion.div 
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="lg:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 p-12 flex flex-col justify-center"
         >
-          <FaHome className="text-indigo-600 text-xl" />
-        </Link>
-      </motion.div>
-
-      <div className="max-w-6xl mx-auto h-full">
-        <div className="text-center mb-4">
-          {/* <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Join Our Team of <span className="text-indigo-600">PNY</span>
-          </h1> */}
-         
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-h-[85vh]">
-          <div className="flex flex-col lg:flex-row h-full">
-            {/* SVG Illustration Side */}
-            <div className="lg:w-1/2 bg-gradient-to-br from-indigo-500 to-purple-600 p-8 flex items-center justify-center overflow-y-auto">
-              <div className="text-white text-center">
-                <div className="max-w-md mx-auto">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-56">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" opacity="0.3"/>
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3"/>
-                    <circle cx="12" cy="7" r="3" fill="currentColor" opacity="0.3"/>
-                    <circle cx="12" cy="17" r="3" fill="currentColor" opacity="0.3"/>
+          <div className="max-w-md mx-auto text-white">
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <svg viewBox="0 0 500 400" className="w-full h-64">
+                <path d="M100,200 Q250,50 400,200 T100,200" fill="none" stroke="white" strokeWidth="2" opacity="0.3" />
+                <circle cx="250" cy="200" r="80" fill="white" opacity="0.1" />
+                <path d="M150,150 Q250,50 350,150 T150,150" fill="none" stroke="white" strokeWidth="3" />
+                <circle cx="250" cy="150" r="40" fill="none" stroke="white" strokeWidth="2" />
+                <path d="M100,250 Q250,350 400,250" fill="none" stroke="white" strokeWidth="3" />
+                <circle cx="250" cy="250" r="40" fill="none" stroke="white" strokeWidth="2" />
+                <circle cx="200" cy="120" r="10" fill="white" />
+                <circle cx="300" cy="120" r="10" fill="white" />
+                <path d="M220,160 Q250,180 280,160" fill="none" stroke="white" strokeWidth="2" />
+              </svg>
+            </motion.div>
+            
+            <motion.h2 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-4xl font-bold mb-6"
+            >
+              Join PNY's Teaching Team
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="text-lg mb-8 opacity-90"
+            >
+              Share your knowledge and inspire the next generation of tech leaders with Pakistan's premier IT institute.
+            </motion.p>
+            
+            <motion.ul 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="space-y-4"
+            >
+              <li className="flex items-center">
+                <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold mt-6 mb-4">Why Teach With Us?</h2>
-                <ul className="space-y-3 text-left max-w-xs mx-auto">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Flexible teaching schedule
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Competitive compensation
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Supportive learning community
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Form Side */}
-            <div className="lg:w-1/2 p-6 sm:p-8 overflow-y-auto">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {/* Full Name */}
-                  <div className="sm:col-span-2">
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaUserGraduate className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="fullName"
-                        name="fullName"
-                        type="text"
-                        {...register("fullName", { required: "Full name is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="John Doe"
-                      />
-                    </div>
-                    {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaEnvelope className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        {...register("email", { 
-                          required: "Email is required",
-                          pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: "Invalid email address"
-                          }
-                        })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="you@example.com"
-                      />
-                    </div>
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  {/* Phone */}
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaPhone className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        {...register("phone", { 
-                          required: "Phone number is required",
-                          pattern: {
-                            value: /^[0-9]{10,15}$/,
-                            message: "Invalid phone number"
-                          }
-                        })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="1234567890"
-                      />
-                    </div>
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
-
-                  {/* Subject Specialization */}
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                      Subject Specialization
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <MdSubject className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        {...register("subject", { required: "Subject is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Mathematics"
-                      />
-                    </div>
-                    {errors.subject && (
-                      <p className="mt-1 text-sm text-red-600">{errors.subject.message}</p>
-                    )}
-                  </div>
-
-                  {/* Qualification */}
-                  <div>
-                    <label htmlFor="qualification" className="block text-sm font-medium text-gray-700 mb-1">
-                      Highest Qualification
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <RiGraduationCapFill className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <select
-                        id="qualification"
-                        name="qualification"
-                        {...register("qualification", { required: "Qualification is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                      >
-                        <option value="">Select qualification</option>
-                        <option value="High School">High School</option>
-                        <option value="Bachelor's Degree">Bachelor's Degree</option>
-                        <option value="Master's Degree">Master's Degree</option>
-                        <option value="PhD">PhD</option>
-                        <option value="Professional Certification">Professional Certification</option>
-                      </select>
-                    </div>
-                    {errors.qualification && (
-                      <p className="mt-1 text-sm text-red-600">{errors.qualification.message}</p>
-                    )}
-                  </div>
-
-                  {/* Gender */}
-                  <div>
-                    <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
-                      Gender
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <MdTransgender className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <select
-                        id="gender"
-                        name="gender"
-                        {...register("gender", { required: "Gender is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                      >
-                        <option value="">Select gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                        <option value="Prefer not to say">Prefer not to say</option>
-                      </select>
-                    </div>
-                    {errors.gender && (
-                      <p className="mt-1 text-sm text-red-600">{errors.gender.message}</p>
-                    )}
-                  </div>
-
-                  {/* Date of Birth */}
-                  <div>
-                    <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
-                      Date of Birth
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaCalendarAlt className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="dob"
-                        name="dob"
-                        type="date"
-                        {...register("dob", { required: "Date of birth is required" })}
-                        className="pl-10 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 border focus:ring-indigo-500 focus:border-indigo-500"
-                      />
-                    </div>
-                    {errors.dob && (
-                      <p className="mt-1 text-sm text-red-600">{errors.dob.message}</p>
-                    )}
-                  </div>
-
-                  {/* Profile Photo */}
-                  <div className="sm:col-span-2">
-                    <label htmlFor="profilePhoto" className="block text-sm font-medium text-gray-700 mb-1">
-                      Profile Photo (Optional)
-                    </label>
-                    <div className="mt-1 flex items-center">
-                      <label
-                        htmlFor="profilePhoto"
-                        className="relative cursor-pointer bg-white rounded-md border border-gray-300 p-2 flex items-center justify-center w-full hover:border-indigo-500 hover:bg-indigo-50 transition duration-150"
-                      >
-                        <div className="flex flex-col items-center">
-                          <IoMdCloudUpload className="h-6 w-6 text-indigo-500 mb-1" />
-                          <span className="text-sm text-gray-600">
-                            {profilePhoto ? 'Change photo' : 'Upload a photo'}
-                          </span>
-                        </div>
-                        <input
-                          id="profilePhoto"
-                          name="profilePhoto"
-                          type="file"
-                          accept="image/*"
-                          {...register("profilePhoto")}
-                          onChange={handlePhotoChange}
-                          className="sr-only"
-                        />
-                      </label>
-                    </div>
-                    {profilePhoto && (
-                      <div className="mt-2 flex items-center">
-                        <img
-                          src={profilePhoto}
-                          alt="Profile preview"
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setProfilePhoto(null);
-                            reset({ profilePhoto: null });
-                          }}
-                          className="ml-2 text-sm text-red-600 hover:text-red-800"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                Competitive compensation packages
+              </li>
+              <li className="flex items-center">
+                <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
                 </div>
-
-                <div className="flex items-center">
-                  <input
-                    id="terms"
-                    name="terms"
-                    type="checkbox"
-                    {...register("terms", { required: "You must accept the terms" })}
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                    I agree to the <a href="#" className="text-indigo-600 hover:text-indigo-500">terms and conditions</a>
-                  </label>
+                Flexible teaching schedules
+              </li>
+              <li className="flex items-center">
+                <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
                 </div>
-                {errors.terms && (
-                  <p className="mt-1 text-sm text-red-600">{errors.terms.message}</p>
-                )}
-
-                <div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <FaChalkboardTeacher className="mr-2 h-4 w-4" />
-                        Submit Application
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
+                Professional development opportunities
+              </li>
+            </motion.ul>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Form Side */}
+        <motion.div 
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="lg:w-1/2 bg-white p-8 lg:p-12 flex flex-col justify-center"
+        >
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Teacher Application</h2>
+            <p className="text-gray-600 mb-8">Fill out the form to join our team</p>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <InputField 
+                  label="Full Name" 
+                  name="fullName" 
+                  value={formFields.fullName} 
+                  onChange={handleChange}
+                  icon={<FaUserGraduate className="text-indigo-500" />}
+                />
+                
+                <InputField 
+                  label="Email" 
+                  name="email" 
+                  type="email" 
+                  value={formFields.email} 
+                  onChange={handleChange}
+                  icon={<FaEnvelope className="text-indigo-500" />}
+                />
+                
+                <InputField 
+                  label="Phone" 
+                  name="phone" 
+                  type="tel" 
+                  value={formFields.phone} 
+                  onChange={handleChange}
+                  icon={<FaPhone className="text-indigo-500" />}
+                />
+                
+                <InputField 
+                  label="Subject" 
+                  name="subject" 
+                  value={formFields.subject} 
+                  onChange={handleChange}
+                  icon={<MdSubject className="text-indigo-500" />}
+                />
+                
+                <SelectField 
+                  label="Qualification" 
+                  name="qualification" 
+                  value={formFields.qualification} 
+                  onChange={handleChange}
+                  icon={<RiGraduationCapFill className="text-indigo-500" />}
+                  options={[
+                    { value: "", label: "Select Qualification" },
+                    { value: "High School", label: "High School" },
+                    { value: "Bachelor's Degree", label: "Bachelor's Degree" },
+                    { value: "Master's Degree", label: "Master's Degree" },
+                    { value: "PhD", label: "PhD" },
+                    { value: "Professional Certification", label: "Professional Certification" }
+                  ]}
+                />
+                
+                <SelectField 
+                  label="Gender" 
+                  name="gender" 
+                  value={formFields.gender} 
+                  onChange={handleChange}
+                  icon={<MdTransgender className="text-indigo-500" />}
+                  options={[
+                    { value: "", label: "Select Gender" },
+                    { value: "male", label: "Male" },
+                    { value: "female", label: "Female" },
+                    { value: "other", label: "Other" }
+                  ]}
+                />
+                
+                <InputField 
+                  label="Date of Birth" 
+                  name="dateOfBirth" 
+                  type="date" 
+                  value={formFields.dateOfBirth} 
+                  onChange={handleChange}
+                  icon={<FaCalendarAlt className="text-indigo-500" />}
+                />
+              </div>
+
+              <FileField 
+                label="Profile Photo" 
+                name="profilePhoto" 
+                onChange={handleChange}
+                preview={profilePreview}
+                onRemove={() => {
+                  setProfilePreview(null);
+                  setFormFields(prev => ({ ...prev, profilePhoto: null }));
+                }}
+              />
+
+              <div className="pt-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  disabled={teacherLoading}
+                  className={`w-full flex justify-center cursor-pointer items-center py-4 px-6 rounded-xl shadow-md text-lg font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg transition-all duration-300 ${teacherLoading ? 'opacity-80 cursor-not-allowed' : ''}`}
+                >
+                  {teacherLoading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing Application...
+                    </>
+                  ) : (
+                    <>
+                      <FaChalkboardTeacher className="mr-3" />
+                      Submit Application
+                    </>
+                  )}
+                </motion.button>
+              </div>
+            </form>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
 };
+
+const InputField = ({ label, name, value, onChange, type = "text", icon }) => (
+  <motion.div 
+    whileHover={{ y: -2 }}
+    transition={{ duration: 0.2 }}
+    className="relative"
+  >
+    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div className="relative rounded-lg shadow-sm border border-gray-200 hover:border-indigo-300 transition-colors">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        {icon}
+      </div>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required
+        className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      />
+    </div>
+  </motion.div>
+);
+
+const SelectField = ({ label, name, value, onChange, icon, options }) => (
+  <motion.div 
+    whileHover={{ y: -2 }}
+    transition={{ duration: 0.2 }}
+    className="relative"
+  >
+    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div className="relative rounded-lg shadow-sm border border-gray-200 hover:border-indigo-300 transition-colors">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        {icon}
+      </div>
+      <select
+        name={name}
+        value={value}
+        onChange={onChange}
+        required
+        className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none transition-all"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </motion.div>
+);
+
+const FileField = ({ label, name, onChange, preview, onRemove }) => (
+  <motion.div
+    whileHover={{ y: -2 }}
+    transition={{ duration: 0.2 }}
+    className="space-y-2"
+  >
+    <label className="block text-sm font-medium text-gray-700">{label}</label>
+    <div className="flex items-center space-x-4">
+      <label className="relative cursor-pointer bg-white rounded-lg border-2 border-dashed border-gray-300 hover:border-indigo-500 transition-colors duration-200 p-4 flex flex-col items-center justify-center w-full">
+        <IoMdCloudUpload className="h-8 w-8 text-indigo-500 mb-2" />
+        <span className="text-sm text-gray-600">
+          {preview ? 'Change photo' : 'Click to upload'}
+        </span>
+        <span className="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</span>
+        <input
+          type="file"
+          name={name}
+          accept="image/*"
+          onChange={onChange}
+          className="sr-only"
+        />
+      </label>
+      {preview && (
+        <div className="relative">
+          <img
+            src={preview}
+            alt="Profile preview"
+            className="h-16 w-16 rounded-full object-cover border-2 border-white shadow-md"
+          />
+          <button
+            type="button"
+            onClick={onRemove}
+            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
+    </div>
+  </motion.div>
+);
 
 export default BecomeTeacherForm;

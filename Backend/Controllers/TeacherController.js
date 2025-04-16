@@ -43,3 +43,11 @@ export const createTeacher = asyncHandler(async (req, res) => {
     teacher,
   });
 });
+
+
+// Get Teacher:
+
+export const getTeacher = asyncHandler(async (req, res) => {
+  const teachers = await TeacherApplication.find({});
+  res.status(200).json(teachers);
+})
