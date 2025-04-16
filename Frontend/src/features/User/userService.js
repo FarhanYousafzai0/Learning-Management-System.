@@ -30,3 +30,8 @@ export const otpVerify = async (otpData) => {
   });
   return response.data;
 };
+
+export const getUser = async () => {
+  const response = await axios.get(`${base_url}/getUser`);
+  return response.data;
+}

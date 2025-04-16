@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { logUser, otpVerify, regUser } from "./userService";
+import { getUser, logUser, otpVerify, regUser } from "./userService";
 
 // Get user from localStorage
 const isUser = JSON.parse(localStorage.getItem("user"));
@@ -51,6 +51,21 @@ export const verifyOtp = createAsyncThunk(
         }
     }
 );
+
+
+// get user - AsyncThunk
+
+export const getUserData = createAsyncThunk(
+    "get-user",
+    async (_, thunkAPI) => {
+        try {
+            return await getUser(); // ✅ Fixed: removed undefined userData
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.data?.error || "Something went wrong");
+        }
+    }
+);
+
 
 // Create userSlice
 export const userSlice = createSlice({
@@ -116,6 +131,22 @@ export const userSlice = createSlice({
                 state.userError = false;
                 state.userSuccess = true;
                 state.user = action.payload;
+            })
+
+
+            .addCase(getUserData.pending, (state) => {
+                state.userLoading = true;
+            })
+            .addCase(getUserData.rejected, (state, action) => {
+                state.userLoading = false;
+                state.userError = true;
+                state.userMessage = action.payload;
+            })
+            .addCase(getUserData.fulfilled, (state, action) => {
+                state.userLoading = false;
+                state.userError = false;
+                state.userSuccess = true;
+                state.allUser = action.payload; // ✅ Save all users here
             });
     }
 });

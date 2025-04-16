@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
-import { FaUserGraduate, FaEnvelope, FaPhone, FaChalkboardTeacher, FaCalendarAlt } from "react-icons/fa";
+import { FaUserGraduate, FaEnvelope, FaPhone, FaChalkboardTeacher, FaCalendarAlt, FaHome } from "react-icons/fa";
 import { RiGraduationCapFill } from "react-icons/ri";
 import { IoMdCloudUpload } from "react-icons/io";
 import { MdSubject, MdTransgender } from "react-icons/md";
 import { fetchTeachers, resetTeacherState } from "../../features/Teacher/TeacherSlice";
+import { Link } from "react-router-dom";
 
 const BecomeTeacherForm = () => {
   const [formFields, setFormFields] = useState({
@@ -119,7 +120,21 @@ setFormFields({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50">
+    
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 relative">
+       <motion.div
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ type: 'spring', stiffness: 100 }}
+        className="absolute top-4 left-4"
+      >
+        <Link
+          to="/"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:bg-indigo-50 transition-colors duration-200"
+        >
+          <FaHome className="text-indigo-600 text-xl" />
+        </Link>
+      </motion.div>
       <div className="container mx-auto flex flex-col lg:flex-row h-full">
         {/* Illustration Side */}
         <motion.div 

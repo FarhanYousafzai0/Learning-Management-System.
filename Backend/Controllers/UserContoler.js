@@ -151,3 +151,14 @@ export const OTPVerification = asyncHandler(async (req, res) => {
 res.send(findUser)
  res.status(200).json({ message: "OTP verified successfully!" });
 });
+
+
+
+export const getUser = asyncHandler(async (req, res) => { 
+
+
+const getAllUsers = await user.find();
+res.send(getAllUsers)
+res.status(200).json({ message: "All Users", getAllUsers });
+
+})

@@ -1,5 +1,5 @@
 import express from 'express'
-import { login, logout, OTPVerification, register } from '../Controllers/UserContoler.js';
+import { getUser, login, logout, OTPVerification, register } from '../Controllers/UserContoler.js';
 
 
 
@@ -17,5 +17,8 @@ userRouter.post('/logout',logout);
 
 // otp
 userRouter.post('/otp/:id',OTPVerification)
+
+
+userRouter.get('/getUser',getUser);
 
 export default userRouter
