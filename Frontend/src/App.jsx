@@ -13,6 +13,7 @@ import OTPVerification from "./pages/Auth/OTPVerification";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import About from "./pages/Admin/About";
 import BecomeTeacherForm from "./pages/Teacher/BecomeTeacherForm";
+import CreateCoursePage from "./pages/Teacher/CreateCoursePage";
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
             {/* Teacher-Routes */}
             <Route path="/teacher">
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="addcourse" element={<CreateCoursePage />} />
             </Route>
 
             {/* Student */}

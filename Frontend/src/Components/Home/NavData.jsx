@@ -182,7 +182,7 @@ export const nav_data = [
           {
             id: 654635,
             title: "Add Course",
-            link: "",
+            link: "/teacher/addcourse",
             icon: <FaBook />
           },
           {
