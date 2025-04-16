@@ -17,7 +17,7 @@ const teacherApplicationSchema = new Schema({
     required: true
   },
   dateOfBirth: { type: Date, required: true },
-  profilePhoto: { type: String }, // URL to stored image
+
   
   
 });

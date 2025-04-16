@@ -11,7 +11,7 @@ export const createTeacher = asyncHandler(async (req, res) => {
     qualification,
     gender,
     dateOfBirth,
-    profilePhoto,
+    
   } = req.body;
 
   if (
@@ -21,8 +21,8 @@ export const createTeacher = asyncHandler(async (req, res) => {
     !subject ||
     !qualification ||
     !gender ||
-    !dateOfBirth ||
-    !profilePhoto
+    !dateOfBirth
+   
   ) {
     return res.status(400).json({ message: 'All fields are required' });
   }
@@ -35,7 +35,7 @@ export const createTeacher = asyncHandler(async (req, res) => {
     qualification,
     gender,
     dateOfBirth,
-    profilePhoto,
+   
   });
 
   res.status(200).json({

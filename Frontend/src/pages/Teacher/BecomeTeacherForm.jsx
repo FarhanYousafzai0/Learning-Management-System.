@@ -17,10 +17,9 @@ const BecomeTeacherForm = () => {
     qualification: "",
     gender: "",
     dateOfBirth: "",
-    profilePhoto: null,
+    
   });
 
-  const [profilePreview, setProfilePreview] = useState(null);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
   const dispatch = useDispatch();
@@ -40,30 +39,19 @@ const BecomeTeacherForm = () => {
   }, [teacherError, teacherSuccess, teacherMessage, dispatch]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+e.preventDefault();
+setFormFields({
+  ...formFields,
+  [e.target.name]: e.target.value,
+})
+
     
-    if (name === "profilePhoto") {
-      const file = files[0];
-      setFormFields(prev => ({ ...prev, [name]: file }));
-      if (file) {
-        setProfilePreview(URL.createObjectURL(file));
-      }
-    } else {
-      setFormFields(prev => ({ ...prev, [name]: value }));
-    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    for (const key in formFields) {
-      if (formFields[key] !== null) {
-        formData.append(key, formFields[key]);
-      }
-    }
-
-    dispatch(fetchTeachers(formData));
+    dispatch(fetchTeachers(formFields));
   };
 
   const resetForm = () => {
@@ -75,9 +63,9 @@ const BecomeTeacherForm = () => {
       qualification: "",
       gender: "",
       dateOfBirth: "",
-      profilePhoto: null,
+     
     });
-    setProfilePreview(null);
+   
     setSubmissionSuccess(false);
   };
 
@@ -301,17 +289,6 @@ const BecomeTeacherForm = () => {
                   icon={<FaCalendarAlt className="text-indigo-500" />}
                 />
               </div>
-
-              <FileField 
-                label="Profile Photo" 
-                name="profilePhoto" 
-                onChange={handleChange}
-                preview={profilePreview}
-                onRemove={() => {
-                  setProfilePreview(null);
-                  setFormFields(prev => ({ ...prev, profilePhoto: null }));
-                }}
-              />
 
               <div className="pt-4">
                 <motion.button
