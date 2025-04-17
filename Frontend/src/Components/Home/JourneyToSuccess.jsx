@@ -1,90 +1,119 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { gsap } from 'gsap';
 import { FaAward, FaMapMarkerAlt, FaUniversity, FaUsers, FaBookOpen } from "react-icons/fa";
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+import MagneticButton from './MagneticButton';
 
 const JourneyToSuccess = () => {
+    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    const [activeIndex, setActiveIndex] = useState(0);
+    const timelineRef = useRef(null);
+
     const statsData = [
         {
             icon: <FaAward className="text-3xl text-indigo-600" />,
             label: "Awarded by USA Education 2.0",
+            value: "Excellence Award",
         },
         {
             icon: <FaMapMarkerAlt className="text-3xl text-indigo-600" />,
-            label: "Multiple Branches in Pakistan",
+            label: "Multiple Branches",
+            value: "Across Pakistan",
         },
         {
             icon: <FaUniversity className="text-3xl text-indigo-600" />,
-            label: "Affiliated with Govt. (PSDA & PBTE)",
+            label: "Government Affiliations",
+            value: "PSDA & PBTE",
         },
         {
             icon: <FaUsers className="text-3xl text-indigo-600" />,
-            label: "100K Alumni",
+            label: "Successful Alumni",
+            value: "100K+",
         },
         {
             icon: <FaBookOpen className="text-3xl text-indigo-600" />,
-            label: "100+ Professional Programs",
+            label: "Professional Programs",
+            value: "100+",
         },
     ];
 
-    const scrollContainerRef = useRef(null);
-    const journeyImages = [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVtTkIZyIgmGW6ulZDWQ1O1mTmaYh7isze-g&s',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCRngk66BU0OlK8z9VbRXMEFQQ3aQoOMRKjRHYIRvBBAD6WQ_KLflUIT6wPa5FnOXAecg&usqp=CAU',
-        'https://pnygroup.co/wp-content/uploads/2024/02/2299f7b9-57bc-4a56-b4fc-3a21bd11cde0.jpg',
-        'https://media.licdn.com/dms/image/v2/D4D22AQELTsY3VmTRbw/feedshare-shrink_800/B4DZUZadE5G4Ak-/0/1739888121175?e=2147483647&v=beta&t=1A-QEjgFeMfDVsDASb-RIfErDxq0pN5m9ZvuYCIs_J0',
-        'https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerhome.bfd09960.png&w=3840&q=75',
+    const milestones = [
+        {
+            year: "2005",
+            title: "Humble Beginnings",
+            description: "Founded with just 2 classrooms and a vision to transform education",
+            icon: "🏛️"
+        },
+        {
+            year: "2010",
+            title: "First Accreditation",
+            description: "Received our first government recognition and accreditation",
+            icon: "📜"
+        },
+        {
+            year: "2015",
+            title: "National Expansion",
+            description: "Opened 5 new campuses across major cities in Pakistan",
+            icon: "📍"
+        },
+        {
+            year: "2020",
+            title: "Digital Transformation",
+            description: "Launched our online learning platform serving 10,000+ students",
+            icon: "💻"
+        },
+        {
+            year: "2023",
+            title: "International Recognition",
+            description: "Awarded as Top Education Provider by Global EdTech Awards",
+            icon: "🌎"
+        }
     ];
 
     useEffect(() => {
-        const container = scrollContainerRef.current;
-        const images = gsap.utils.toArray('.journey-image');
-
-        // Calculate total width of all images
-        const totalWidth = images.length * images[0].offsetWidth;
-
-        // Create horizontal scroll animation with proper boundaries
-        gsap.to(images, {
-            xPercent: -100 * (images.length - 1),
-            ease: 'none',
-            scrollTrigger: {
-                trigger: container,
-                pin: true,
-                scrub: 1,
-                end: () => `+=${totalWidth}`,
-                invalidateOnRefresh: true
+        const handleMouseMove = (e) => {
+            setCursorPosition({ x: e.clientX, y: e.clientY });
+            
+            if (timelineRef.current) {
+                const { left, width } = timelineRef.current.getBoundingClientRect();
+                const percent = Math.min(1, Math.max(0, (e.clientX - left) / width));
+                const newIndex = Math.floor(percent * (milestones.length - 1));
+                setActiveIndex(newIndex);
             }
-        });
-
-        // Cleanup function
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
     return (
-        <section className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <section className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+            {/* Floating decorative elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-10 w-64 h-64 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                <div className="absolute top-1/4 right-20 w-72 h-72 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            </div>
+
             {/* Text Section */}
-            <div className="container mx-auto px-6 py-24 md:py-32 flex flex-col justify-center min-h-[60vh]">
+            <div className="container mx-auto px-6 py-24 md:py-32 flex flex-col justify-center min-h-[60vh] relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="max-w-3xl mx-auto text-center"
+                    className="max-w-4xl mx-auto text-center"
                 >
-                    <h2 className="mt-4 text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                        Our <span className='text-green-500'>Journey</span> to Success
+                    <div className="inline-block mb-4 px-4 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm font-semibold">
+                        Our Evolution
+                    </div>
+                    <h2 className="mt-4 text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                        Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-green-500">Growth Story</span>
                     </h2>
-                    <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed">
-                        The journey shows the entrepreneurial growth of each individual student, with current goals to achieve victory. Through our success, we raise you up to be unstoppable in the world of opportunities.
+                    <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                        Trace our journey from modest beginnings to becoming a leader in innovative education through this interactive timeline.
                     </p>
 
-                    <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                    <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                         {statsData.map((stat, index) => (
                             <motion.div
                                 key={index}
@@ -92,41 +121,110 @@ const JourneyToSuccess = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow duration-300"
+                                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
                             >
-                                {stat.icon}
-                                <p className="mt-4 text-gray-700 font-semibold">{stat.label}</p>
+                                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-xl bg-indigo-50">
+                                    {stat.icon}
+                                </div>
+                                <h3 className="text-lg font-bold text-gray-900">{stat.value}</h3>
+                                <p className="mt-2 text-gray-600 text-sm">{stat.label}</p>
                             </motion.div>
                         ))}
                     </div>
                 </motion.div>
             </div>
 
-            {/* Horizontal Scrolling Gallery */}
-            <div
-                ref={scrollContainerRef}
-                className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden"
-            >
-                <div className="absolute inset-0 flex items-center">
-                    <div className="flex whitespace-nowrap">
-                        {journeyImages.map((img, index) => (
-                            <div
-                                key={index}
-                                className="journey-image relative inline-block w-[80vw] md:w-[50vw] h-[30vh] md:h-[40vh] mx-4 rounded-2xl overflow-hidden"
-                            >
-                                <img
-                                    src={img}
-                                    alt={`Journey moment ${index}`}
-                                    className="w-full h-full object-cover object-center transition-transform duration-500 ease-in-out transform hover:scale-105"
+            {/* Interactive Timeline Section */}
+            <div className="relative w-full py-20 bg-white">
+                <div className="container mx-auto px-6">
+                    <div 
+                        ref={timelineRef}
+                        className="relative h-2 bg-gray-200 rounded-full max-w-4xl mx-auto mb-20 cursor-pointer"
+                        onMouseMove={(e) => {
+                            const { left, width } = e.currentTarget.getBoundingClientRect();
+                            const percent = Math.min(1, Math.max(0, (e.clientX - left) / width));
+                            const newIndex = Math.floor(percent * (milestones.length - 1));
+                            setActiveIndex(newIndex);
+                        }}
+                    >
+                        {/* Timeline progress */}
+                        <motion.div 
+                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 to-green-500 rounded-full"
+                            style={{ 
+                                width: `${(activeIndex / (milestones.length - 1)) * 100}%` 
+                            }}
+                            transition={{ type: 'spring', damping: 20 }}
+                        />
+                        
+                        {/* Timeline markers */}
+                        <div className="absolute inset-0 flex justify-between items-center">
+                            {milestones.map((_, index) => (
+                                <button
+                                    key={index}
+                                    className={`w-6 h-6 rounded-full ${index <= activeIndex ? 'bg-indigo-600 scale-125' : 'bg-gray-300'} transition-all duration-300 transform -translate-y-1/2`}
+                                    onClick={() => setActiveIndex(index)}
+                                    aria-label={`Go to ${milestones[index].year}`}
                                 />
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
+
+                    {/* Active milestone content */}
+                    <motion.div
+                        key={activeIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"
+                    >
+                        <div className="text-center md:text-right">
+                            <span className="inline-block text-8xl mb-4">{milestones[activeIndex].icon}</span>
+                            <h3 className="text-5xl font-bold text-gray-900">{milestones[activeIndex].year}</h3>
+                        </div>
+                        
+                        <div className="md:col-span-2 text-center md:text-left">
+                            <h4 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{milestones[activeIndex].title}</h4>
+                            <p className="text-lg text-gray-600 max-w-2xl mx-auto md:mx-0">{milestones[activeIndex].description}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* Cursor follower */}
+                    <motion.div
+                        className="fixed w-64 h-64 rounded-full bg-indigo-100 pointer-events-none z-0"
+                        style={{
+                            left: cursorPosition.x - 128,
+                            top: cursorPosition.y - 128,
+                            opacity: 0.2
+                        }}
+                        transition={{ type: 'spring', mass: 0.1 }}
+                    />
                 </div>
             </div>
 
-            {/* Floating Scroll Indicator */}
-           
+            {/* CTA Section */}
+            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-20">
+                <div className="container mx-auto px-6 text-center">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        className="max-w-3xl mx-auto"
+                    >
+                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                            Be Part of Our Next Chapter
+                        </h3>
+                        <p className="text-xl text-indigo-100 mb-8">
+                            Join thousands of students writing their success stories with us.
+                        </p>
+                        <MagneticButton 
+                           
+                        >
+                            Start Your Journey
+                        </MagneticButton>
+                    </motion.div>
+                </div>
+            </div>
         </section>
     );
 };

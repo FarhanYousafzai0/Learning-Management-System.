@@ -107,7 +107,7 @@ color: white;
     left: 0;
     display: block;
     border-radius: 50px;
-    background: #3586D3;
+  background: linear-gradient(to right, #234567, #3586D3);
     width: 45px;
     height: 45px;
     transition: all 0.3s ease;
@@ -511,4 +511,22 @@ color: white;
   p {
     margin: 0;
   }
+}
+
+.floating-nav {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* For mobile menu positioning */
+@media (max-width: 1024px) {
+  .pt-24 {
+    padding-top: 80px;
+  }
+}
+
+.bg-primary {
+  background: linear-gradient(to right, #6366f1, #9333ea) !important;
+
 }

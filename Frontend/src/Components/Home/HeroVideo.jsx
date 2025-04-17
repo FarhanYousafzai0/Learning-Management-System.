@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { BsPlayFill } from "react-icons/bs";
+import { FaPlayCircle } from "react-icons/fa";
 
 const style = {
   position: "absolute",
@@ -17,7 +18,7 @@ const style = {
   p: 4,
 };
 
-export default function HeroVideo() {
+const  HeroVideo = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -28,12 +29,11 @@ export default function HeroVideo() {
         onClick={handleOpen}
         className="cursor-pointer play items-center outline-0 gap-3 font-semibold flex p-4 rounded-md  border-0"
       >
-        <div
-          style={{ boxShadow: "0 0 0 8px rgba(6, 106, 201, 0.4)" }}
-          className="flex h-[40px] transition-all duration-400 play-child w-[40px]  bg-blue-700 rounded-full justify-center items-center"
-        >
-          <BsPlayFill size={20} color="white" />
-        </div>
+        <div className="relative">
+                          <FaPlayCircle className="text-3xl text-indigo-500 group-hover:text-indigo-600 transition-colors" />
+                          <span className="absolute inset-0 bg-indigo-100 rounded-full opacity-0 group-hover:opacity-100 -z-10 transition-opacity"></span>
+                        </div>
+        
         Watch video
       </button>
       <Modal
@@ -63,3 +63,5 @@ export default function HeroVideo() {
     </div>
   );
 }
+
+export default HeroVideo;
