@@ -15,6 +15,7 @@ import About from "./pages/Admin/About";
 import BecomeTeacherForm from "./pages/Teacher/BecomeTeacherForm";
 import CreateCoursePage from "./pages/Teacher/CreateCoursePage";
 import CoursesPage from "./pages/Student/CoursesPage";
+import BranchesPage from "./pages/Home/BranchesPage";
 
 
 const App = () => {
@@ -58,6 +59,8 @@ const App = () => {
             <Route path="/">
               <Route path="becomeTeacher" element={<BecomeTeacherForm />} />
               <Route path="courses" element={<CoursesPage />} />
+
+              <Route path="branches" element={<BranchesPage />} />
 
               </Route>
 {/* About */}

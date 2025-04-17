@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState,useRef,useEffect } from 'react';
 import { FiHeart, FiClock, FiCalendar } from 'react-icons/fi';
 import { FaHeart, FaStar, FaRegStar } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
+import {motion} from 'framer-motion';
+import gsap from 'gsap';
 import { RiFilter3Line } from 'react-icons/ri';
 import NavBar from '../../Components/Home/NavBar';
 
@@ -158,6 +160,45 @@ const CoursesPage = () => {
     }
   ];
 
+  const paragraphRef = useRef(null);
+  useEffect(() => {
+    if (!paragraphRef.current) return;
+  
+    // Wrap each character for individual control
+    const text = paragraphRef.current.innerText;
+    paragraphRef.current.innerHTML = text.split('').map(char => 
+      `<span class="char" style="
+        display: inline-block;
+        color: inherit;
+        transition: color 0.3s ease;
+      ">
+        ${char === ' ' ? '&nbsp;' : char}
+      </span>`
+    ).join('');
+  
+    // Animate with a single color wave
+    gsap.to(paragraphRef.current.querySelectorAll('.char'), {
+      color: "#0D9488", // Bright blue (change to your brand color)
+      duration: 0.6,
+      repeat: -1,
+      yoyo: true,   
+      stagger: {
+        each: 0.03,
+        from: "start", // Flows left-to-right
+        ease: "sine.inOut" // Smooth sine wave timing
+      },
+      onComplete: () => {
+        // Reset to original color after a delay
+        gsap.to(paragraphRef.current.querySelectorAll('.char'), {
+          color: "inherit",
+          duration: 0.4,
+          delay: 0.2
+        });
+      }
+    });
+  
+  }, []);
+
   
   const toggleLike = (id) => {
     setLikedItems(prev => ({
@@ -199,12 +240,22 @@ const CoursesPage = () => {
    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Explore Our Courses</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Learn new skills with our expert instructors. Choose from hundreds of courses in various categories.
-          </p>
-        </div>
+        <div className="text-center mb-16">
+      <motion.h1
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-5xl md:text-6xl font-bold text-gray-900 mb-6"
+      >
+        Explore Our <span className="text-[#0D9488]">Courses</span>
+      </motion.h1>
+      <p
+        ref={paragraphRef}
+        className="text-xl text-gray-600 max-w-2xl mx-auto "
+      >
+        Learn new skills with our expert instructors. Choose from hundreds of courses in various categories.
+      </p>
+    </div>
         
         {/* Search and Filter */}
         <div className="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -257,7 +308,10 @@ const CoursesPage = () => {
         {filterCourses.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filterCourses.map((course) => (
-              <div 
+              <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
                 key={course.id} 
                 className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all cursor-pointer  duration-300 transform hover:-translate-y-1"
               >
@@ -315,7 +369,7 @@ const CoursesPage = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (

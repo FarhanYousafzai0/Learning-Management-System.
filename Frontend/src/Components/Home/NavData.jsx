@@ -19,6 +19,7 @@ import {
   FaLayerGroup,
   FaCube
 } from "react-icons/fa";
+import { FaCubesStacked } from "react-icons/fa6";
 
 export const nav_data = [
   {
@@ -114,17 +115,10 @@ export const nav_data = [
       },
       {
         id: 17,
-        title: "Shop",
-        link: "",
-        icon: <FaShoppingCart />,
-        subList: [
-          {
-            id: 18,
-            title: "Course Categories",
-            icon: <FaBook />
-          },
-          // ... other shop items
-        ],
+        title: "Branches",
+        link: "/branches",
+        icon: <FaCubesStacked />,
+       
       },
       {
         id: 19,
