@@ -122,7 +122,7 @@ const NavBar = () => {
                     onMouseLeave={() => setIsCategoryHovered(false)}
                   >
                     <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
-                      <div className="bg-[#066AC9] p-3">
+                      <div className="bg-primary p-3">
                         <h3 className="text-white font-medium">All Categories</h3>
                       </div>
                       
