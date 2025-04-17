@@ -68,7 +68,7 @@ const Quizez = () => {
                                         <div
                                             onClick={() => handleSelected(startNumber + index)}
                                             className={`h-[80px] shrink-0 w-[80px] cursor-pointer rounded-full flex items-center justify-center 
-                                                ${selected === startNumber + index ? "text-white bg-blue-600" : "text-black bg-gray-200"}`}
+                                                ${selected === startNumber + index ? "text-white bg-primary" : "text-black bg-gray-200"}`}
                                         >
                                             {startNumber + index + 1}
                                         </div>

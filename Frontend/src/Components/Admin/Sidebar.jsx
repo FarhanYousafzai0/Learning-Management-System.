@@ -14,7 +14,6 @@ const Sidebar = ({ selected, setSelected }) => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      // Auto-open sidebar on desktop
       if (!mobile) setSidebarOpen(true);
     };
 
@@ -39,14 +38,16 @@ const Sidebar = ({ selected, setSelected }) => {
     <>
       {/* Mobile Hamburger Button */}
       {isMobile && (
-        <button
+        <motion.button
           onClick={toggleSidebar}
-          className="fixed z-50 top-4 right-4 p-2 bg-[#24292D] text-white rounded-md"
+          className="fixed z-50 top-4 right-4 p-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-md shadow-lg"
           aria-label="Toggle menu"
           aria-expanded={sidebarOpen}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
         >
           {sidebarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-        </button>
+        </motion.button>
       )}
 
       {/* Overlay for mobile when sidebar open */}
@@ -67,33 +68,33 @@ const Sidebar = ({ selected, setSelected }) => {
         initial={isMobile ? { x: '-100%' } : false}
         animate={isMobile ? { x: sidebarOpen ? 0 : '-100%' } : false}
         transition={{ type: 'tween', ease: 'easeInOut' }}
-        className={`min-h-screen fixed text-white p-5 bg-[#24292D] z-40 w-64`}
+        className={`min-h-screen fixed text-white p-5 z-40 w-64 bg-gradient-to-b from-indigo-700 to-purple-800`}
       >
         <div className="flex flex-col h-full">
           {/* Dashboard Link */}
           <Link
-            to="/dashboard" // Add your actual dashboard route
+            to="/dashboard"
             onClick={() => {
               setSelected("Dashboard");
               closeSidebar();
             }}
-            className={`flex gap-3 items-center px-5 mt-5 py-3 rounded-md mb-5 ${
+            className={`flex gap-3 items-center px-5 mt-5 py-3 rounded-lg mb-5 cursor-pointer transition-all ${
               selected === "Dashboard" 
-                ? "bg-gray-100 text-black" 
-                : "hover:bg-gray-700 hover:text-white"
-            } transition-colors`}
+                ? "bg-white text-indigo-600 shadow-md" 
+                : "hover:bg-white/20 hover:shadow-sm"
+            }`}
           >
             <FaHome />
             <span className="text-sm font-semibold">Dashboard</span>
           </Link>
 
-          <p className="text-gray-400 text-xs uppercase tracking-wider px-5 mb-3">Pages</p>
+          <p className="text-indigo-200 text-xs uppercase tracking-wider px-5 mb-3 font-medium">Navigation</p>
           
           <ul className="flex-1 overflow-y-auto">
             {sidebar_data?.map((item, index) => (
-              <li key={index} className="mb-2">
+              <li key={index} className="mb-1">
                 {/* Main Menu Item */}
-                <div
+                <motion.div
                   onClick={() => {
                     handleClick(index);
                     if (!item.list) {
@@ -101,21 +102,24 @@ const Sidebar = ({ selected, setSelected }) => {
                       closeSidebar();
                     }
                   }}
-                  className={`flex items-center justify-between px-5 py-3 rounded-md cursor-pointer ${
+                  className={`flex items-center justify-between px-5 py-3 rounded-lg cursor-pointer transition-all ${
                     selected === item.title && !item.list
-                      ? "bg-gray-100 text-black"
-                      : "hover:bg-gray-700"
-                  } transition-colors`}
+                      ? "bg-white text-indigo-600 shadow-md"
+                      : "hover:bg-white/20 hover:shadow-sm"
+                  }`}
                   aria-expanded={open === index && !!item.list}
+                  
                 >
                   <div className="flex items-center gap-3">
                     {item.icon}
                     <span className="text-sm font-medium">{item.title}</span>
                   </div>
                   {item.list && (
-                    open === index ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />
+                    open === index ? 
+                    <RiArrowDropUpLine className="text-white" /> : 
+                    <RiArrowDropDownLine className="text-white" />
                   )}
-                </div>
+                </motion.div>
 
                 {/* Submenu Items */}
                 {item.list && (
@@ -126,21 +130,21 @@ const Sidebar = ({ selected, setSelected }) => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
+                        className="overflow-hidden pl-2 mt-1"
                       >
                         {item.list.map((sub, subIndex) => (
                           <li key={subIndex}>
                             <Link
-                              to={sub.path || "#"} // Add your actual paths
+                              to={sub.path || "#"}
                               onClick={() => {
                                 setSelected(sub.title);
                                 closeSidebar();
                               }}
-                              className={`block ml-10 py-2 px-3 rounded-md ${
+                              className={`block ml-8 py-2 px-3 rounded-lg cursor-pointer transition-all text-sm ${
                                 selected === sub.title
-                                  ? "bg-gray-100 text-black"
-                                  : "hover:bg-gray-700"
-                              } transition-colors text-sm`}
+                                  ? "bg-white text-indigo-600 font-medium shadow-sm"
+                                  : "text-indigo-100 hover:bg-white/10"
+                              }`}
                             >
                               {sub.title}
                             </Link>

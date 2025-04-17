@@ -89,7 +89,7 @@ const QuizModal = () => {
         aria-describedby="quiz-modal-description"
       >
         <Box sx={style}>
-          <Typography id="quiz-modal-title" variant="h4" component="h2" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
+          <Typography id="quiz-modal-title" className='text-black' variant="h4" component="h2" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
             Add a Quiz
           </Typography>
 

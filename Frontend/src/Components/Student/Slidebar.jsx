@@ -6,7 +6,7 @@ const Slidebar = () => {
     const [selected,setSelected] = useState('Dashboard')
   return (
     <>
-      <ul className='bg-gray-900 hidden md:flex flex-col py-10 w-[25%] px-5 rounded-md'>
+      <ul className='bg-primary hidden md:flex flex-col py-10 w-[25%] px-5 rounded-md'>
         {sidebar.map((item, index) => (
           <li
           onClick={() => setSelected(item.title)}
