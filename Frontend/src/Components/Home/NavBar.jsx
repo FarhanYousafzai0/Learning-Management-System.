@@ -281,80 +281,88 @@ const NavBar = () => {
 
             {/* Avatar & Dropdown */}
             <div className="relative">
-              <Avatar
-                onClick={handleOpen}
-                sx={{ 
-                  width: 40, 
-                  height: 40,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'scale(1.1)',
-                    boxShadow: '0 0 0 2px #E6F0F9'
-                  }
-                }}
-                src="https://themes.stackbros.in/eduport_r/assets/01-7N0KytgQ.jpg"
-              />
-              
-              <div className={`absolute right-0 top-14 w-72 bg-white rounded-xl shadow-xl z-50 overflow-hidden transition-all duration-300 ${open ? 'flex flex-col opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
-                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-[#E6F0F9] to-[#F0F7FC]">
-                  <Avatar 
-                    sx={{ width: 48, height: 48 }} 
-                    src="https://themes.stackbros.in/eduport_r/assets/01-7N0KytgQ.jpg" 
-                  />
-                  <div>
-                    <h3 className="font-semibold text-gray-800">Farhan</h3>
-                    <p className="text-xs text-gray-500">farhan@gmail.com</p>
-                  </div>
-                </div>
+  <Avatar
+    onClick={handleOpen}
+    sx={{ 
+      width: 42, 
+      height: 42,
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.1)',
+        boxShadow: '0 0 0 3px rgba(99, 102, 241, 0.3)'
+      }
+    }}
+    src="https://themes.stackbros.in/eduport_r/assets/01-7N0KytgQ.jpg"
+  />
+  
+  <div className={`absolute right-0 top-16 w-72 bg-white rounded-xl shadow-2xl z-50 overflow-hidden transition-all duration-300 transform ${open ? 'flex flex-col opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+    {/* Header with user info */}
+    <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-100">
+      <Avatar 
+        sx={{ 
+          width: 52, 
+          height: 52,
+          border: '2px solid #6366f1'
+        }} 
+        src="https://themes.stackbros.in/eduport_r/assets/01-7N0KytgQ.jpg" 
+      />
+      <div>
+        <h3 className="font-semibold text-gray-800">Farhan Yousafzai</h3>
+        <p className="text-xs text-gray-500">Admin</p>
+      </div>
+    </div>
 
-                <div className="flex flex-col p-2">
-                  <Link 
-                    to="/profile" 
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#E6F0F9] transition-colors duration-200 text-gray-700 hover:text-[#066AC9]"
-                  >
-                    <User size={18} className="text-gray-500" />
-                    <span className="text-sm font-medium">Edit Profile</span>
-                  </Link>
-                  
-                  <Link 
-                    to="/settings" 
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#E6F0F9] transition-colors duration-200 text-gray-700 hover:text-[#066AC9]"
-                  >
-                    <Settings size={18} className="text-gray-500" />
-                    <span className="text-sm font-medium">Account Settings</span>
-                  </Link>
-                  
-                  <Link 
-                    to="/help" 
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#E6F0F9] transition-colors duration-200 text-gray-700 hover:text-[#066AC9]"
-                  >
-                    <HelpCircle size={18} className="text-gray-500" />
-                    <span className="text-sm font-medium">Help & Support</span>
-                  </Link>
-                </div>
+    {/* Menu items */}
+    <div className="flex flex-col p-2 space-y-1">
+      <Link 
+        to="/profile" 
+        className="flex items-center gap-3 p-3 rounded-lg hover:bg-indigo-50 transition-all duration-200 text-gray-700 hover:text-indigo-600 group"
+      >
+        <User size={18} className="text-gray-500 group-hover:text-indigo-600" />
+        <span className="text-sm font-medium">My Profile</span>
+      </Link>
+      
+      <Link 
+        to="/settings" 
+        className="flex items-center gap-3 p-3 rounded-lg hover:bg-indigo-50 transition-all duration-200 text-gray-700 hover:text-indigo-600 group"
+      >
+        <Settings size={18} className="text-gray-500 group-hover:text-indigo-600" />
+        <span className="text-sm font-medium">Account Settings</span>
+      </Link>
+      
+      <Link 
+        to="/help" 
+        className="flex items-center gap-3 p-3 rounded-lg hover:bg-indigo-50 transition-all duration-200 text-gray-700 hover:text-indigo-600 group"
+      >
+        <HelpCircle size={18} className="text-gray-500 group-hover:text-indigo-600" />
+        <span className="text-sm font-medium">Help Center</span>
+      </Link>
+    </div>
 
-                <div className="flex justify-between items-center p-3 border-t border-gray-100">
-                  <span className="text-sm font-semibold text-gray-600">Theme</span>
-                  <div className="flex items-center gap-1">
-                    <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer bg-black duration-300" title="Light">
-                      <Sun size={16} className="text-white hover:text-black" />
-                    </button>
-                    <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer bg-black duration-300" title="Dark">
-                      <Moon size={16} className="text-white hover:text-black" />
-                    </button>
-                    <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer bg-black duration-300" title="Auto">
-                      <Laptop size={16} className="text-white hover:text-black" />
-                    </button>
-                  </div>
-                </div>
+    {/* Theme switcher */}
+    <div className="flex justify-between items-center p-3 border-t border-gray-100">
+      <span className="text-sm font-medium text-gray-600">Theme</span>
+      <div className="flex items-center gap-1">
+        <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200" title="Light">
+          <Sun size={16} className="text-yellow-500" />
+        </button>
+        <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200" title="Dark">
+          <Moon size={16} className="text-indigo-600" />
+        </button>
+        <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200" title="Auto">
+          <Laptop size={16} className="text-gray-600" />
+        </button>
+      </div>
+    </div>
 
-                <button className='bg-red-400 text-white px-6 p-2 rounded-lg flex items-center gap-2 cursor-pointer justify-center hover:bg-red-600 transition-colors duration-200'>
-                  <LogOut size={16} className="text-white" /> 
-                  <span className='font-semibold'> Logout</span>
-                </button>
-              </div>
-            </div>
+    {/* Logout button */}
+    <Link to="/login" className="mt-2 mx-2 mb-3 py-2 px-4 cursor-pointer rounded-lg flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white font-medium hover:from-red-600 hover:to-rose-700 transition-all duration-300 shadow hover:shadow-md">
+      <LogOut size={16} className="text-white" />
+      <span>Sign Out</span>
+    </Link>
+  </div>
+</div>
           </div>
         </div>
       </div>

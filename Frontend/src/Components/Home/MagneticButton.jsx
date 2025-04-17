@@ -36,7 +36,7 @@ const MagneticButton = ({
     >
       <button
         ref={buttonRef}
-        className="relative z-10 md:px-8 px-5 p-2 md:py-4 cursor-pointer bg-gradient-to-r whitespace-nowrap from-indigo-600 to-purple-600 text-white font-medium rounded-md shadow-lg overflow-hidden group"
+        className="relative z-10 md:px-8 px-5 p-2 md:py-3 cursor-pointer bg-gradient-to-r whitespace-nowrap from-indigo-600 to-purple-600 text-white font-medium rounded-md shadow-lg overflow-hidden group"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >

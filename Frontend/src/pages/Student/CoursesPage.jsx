@@ -275,26 +275,26 @@ const CoursesPage = () => {
           <div className="flex items-center gap-2 bg-white rounded-lg shadow-sm p-1">
             <button
               onClick={() => setActiveFilter('all')}
-              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'all' ? 'bg-green-500 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'all' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'}`}
             >
               All
             </button>
             <button
               onClick={() => setActiveFilter('development')}
-              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'development' ? 'bg-green-500 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'development' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'}`}
             >
               Development
             </button>
             <button
               onClick={() => setActiveFilter('design')}
-              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'design' ? 'bg-green-500 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'design' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'}`}
             >
               Design
             </button>
 
             <button
               onClick={() => setActiveFilter('business')}
-              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'business' ? 'bg-green-500 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+              className={`px-4 py-2 rounded-md text-sm cursor-pointer font-medium ${activeFilter === 'business' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'}`}
             >
               Business
             </button>
@@ -382,24 +382,23 @@ const CoursesPage = () => {
         {/* Pagination */}
         {filterCourses.length > 0 && (
           <div className="mt-12 flex justify-center">
-            <nav className="inline-flex  items-center justify-center gap-1 rounded-lg shadow-lg p-2 bg-white">
-  <button className="px-4 py-2 rounded-l-lg  cursor-pointer border border-gray-300 text-sm font-semibold text-green-600 bg-white hover:bg-green-100 transition">
+            <nav className="inline-flex items-center justify-center gap-1 rounded-lg shadow-lg p-2">
+  <button className="px-4 py-2 rounded-l-lg cursor-pointer border-gray-300 text-sm font-semibold bg-white  transition">
     Previous
   </button>
-  <button className="px-4 py-2 border cursor-pointer rounded-md border-gray-300 text-sm font-semibold text-green-600 bg-white hover:bg-green-100 transition">
+  <button className="px-4 py-2 cursor-pointer rounded-md border-gray-300 text-sm font-semibold bg-white  transition">
     1
   </button>
-  <button className="px-4 py-2 border cursor-pointer rounded-md border-green-500 text-sm font-semibold text-white bg-green-500 hover:bg-green-600 transition">
+  <button className="px-4 py-2 border cursor-pointer rounded-md text-sm font-semibold text-white" style={{background: 'linear-gradient(to right, #6366f1, #9333ea)'}}>
     2
   </button>
-  <button className="px-4 py-2 border cursor-pointer rounded-md border-green-500 text-sm font-semibold text-white bg-green-500 hover:bg-green-600 transition">
+  <button className="px-4 py-2 border cursor-pointer rounded-md text-sm font-semibold text-white" style={{background: 'linear-gradient(to right, #6366f1, #9333ea)'}}>
     3
   </button>
-  <button className="px-4 py-2 cursor-pointer rounded-r-lg border border-gray-300 text-sm font-semibold text-green-600 bg-white hover:bg-green-100 transition">
+  <button className="px-4 py-2 cursor-pointer rounded-r-lg border border-gray-300 text-sm font-semibold bg-white  transition">
     Next
   </button>
 </nav>
-
           </div>
         )}
       </div>
