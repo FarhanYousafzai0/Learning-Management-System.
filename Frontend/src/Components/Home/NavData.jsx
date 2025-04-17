@@ -101,31 +101,10 @@ export const nav_data = [
     list: [
       {
         id: 15,
-        title: "Course",
-        link: "",
+        title: "Courses",
+        link: "/courses",
         icon: <FaBook />,
-        subList: [
-          {
-            id: 22,
-            title: "Course Classic",
-            icon: <FaBook />
-          },
-          {
-            id: 23,
-            title: "Course modern",
-            icon: <FaBook />
-          },
-          {
-            id: 24,
-            title: "Course minimal",
-            icon: <FaBook />
-          },
-          {
-            id: 25,
-            title: "Course grid",
-            icon: <FaBook />
-          },
-        ],
+      
       },
       {
         id: 16,
